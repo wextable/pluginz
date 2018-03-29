@@ -35,6 +35,7 @@
 		65D897D6206D961D00F3092A /* AppDelegate+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D897D5206D961D00F3092A /* AppDelegate+Extensions.swift */; };
 		65D897DB206D974B00F3092A /* Stay+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D897DA206D974B00F3092A /* Stay+Extensions.swift */; };
 		65D897DD206D9EB200F3092A /* CheckInPluginFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D897DC206D9EB200F3092A /* CheckInPluginFactory.swift */; };
+		65D897DF206DA30C00F3092A /* CheckInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D897DE206DA30C00F3092A /* CheckInViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -113,6 +114,7 @@
 		65D897D5206D961D00F3092A /* AppDelegate+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppDelegate+Extensions.swift"; sourceTree = "<group>"; };
 		65D897DA206D974B00F3092A /* Stay+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Stay+Extensions.swift"; sourceTree = "<group>"; };
 		65D897DC206D9EB200F3092A /* CheckInPluginFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckInPluginFactory.swift; sourceTree = "<group>"; };
+		65D897DE206DA30C00F3092A /* CheckInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckInViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -243,6 +245,7 @@
 			children = (
 				65D897C9206D953700F3092A /* CheckInModule.swift */,
 				65D897DC206D9EB200F3092A /* CheckInPluginFactory.swift */,
+				65D897DE206DA30C00F3092A /* CheckInViewController.swift */,
 			);
 			path = Source;
 			sourceTree = "<group>";
@@ -555,6 +558,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				65D897CA206D953700F3092A /* CheckInModule.swift in Sources */,
+				65D897DF206DA30C00F3092A /* CheckInViewController.swift in Sources */,
 				65D897DD206D9EB200F3092A /* CheckInPluginFactory.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

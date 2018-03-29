@@ -11,7 +11,7 @@ import SharedLibrary
 
 
 public protocol CheckInStay: TilePluginStay {
-    var checkInAvailable: Bool { get }
+    var checkInAvailable: Bool { get set }
 }
 
 
