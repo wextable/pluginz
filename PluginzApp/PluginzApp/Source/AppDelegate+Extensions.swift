@@ -22,5 +22,13 @@ extension AppDelegate: StaysModuleDelegate {
         }
     }
     
+}
+
+extension AppDelegate: CheckInModuleDelegate {
+    func checkInCompleted(stay: CheckInStay, updateBlock: @escaping TilePluginUpdateBlock) {
+        CheckInModule.registerPlugin(forStay: stay, updateBlock: updateBlock)
+        DKeyModule.registerPlugin(forStay: stay, updateBlock: updateBlock)
+    }
+    
     
 }

@@ -51,15 +51,12 @@ enum CheckInPlugin: TilePlugin {
             let checkInVC = CheckInViewController()
             checkInVC.completion = {
                 stay.checkInAvailable = false
-                CheckInPluginFactory.registerPlugin(forStay: stay, updateBlock: updateBlock)
+                CheckInModule.checkInCompleted(stay: stay, updateBlock: updateBlock)
             }
             
             vc.present(checkInVC, animated: true, completion: nil)
         }
         
-        
     }
-    
-    
     
 }

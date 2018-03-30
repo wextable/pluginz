@@ -18,5 +18,14 @@ public protocol CheckInStay: TilePluginStay {
 public class CheckInModule: TilePluginModule {
     public static var tilePluginFactories: [TilePluginFactory.Type] = []
     
+    public static var delegate: CheckInModuleDelegate?
     
+    public static func checkInCompleted(stay: CheckInStay, updateBlock: @escaping TilePluginUpdateBlock) {
+        delegate?.checkInCompleted(stay: stay, updateBlock: updateBlock)
+    }
+    
+}
+
+public protocol CheckInModuleDelegate {
+    func checkInCompleted(stay: CheckInStay, updateBlock: @escaping TilePluginUpdateBlock)
 }

@@ -10,6 +10,7 @@
 		6564D793206D929300CABE13 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6564D791206D929300CABE13 /* Main.storyboard */; };
 		6564D795206D929300CABE13 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6564D794206D929300CABE13 /* Assets.xcassets */; };
 		6564D798206D929300CABE13 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6564D796206D929300CABE13 /* LaunchScreen.storyboard */; };
+		65ADE90B206DC226004CA884 /* DKeyPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65ADE90A206DC226004CA884 /* DKeyPlugin.swift */; };
 		65D89777206D937F00F3092A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D89775206D937F00F3092A /* AppDelegate.swift */; };
 		65D89785206D93E200F3092A /* StaysModule.h in Headers */ = {isa = PBXBuildFile; fileRef = 65D89783206D93E200F3092A /* StaysModule.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		65D89788206D93E200F3092A /* StaysModule.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65D89781206D93E100F3092A /* StaysModule.framework */; };
@@ -34,7 +35,7 @@
 		65D897D4206D95BB00F3092A /* StayCardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D897D3206D95BB00F3092A /* StayCardViewModel.swift */; };
 		65D897D6206D961D00F3092A /* AppDelegate+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D897D5206D961D00F3092A /* AppDelegate+Extensions.swift */; };
 		65D897DB206D974B00F3092A /* Stay+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D897DA206D974B00F3092A /* Stay+Extensions.swift */; };
-		65D897DD206D9EB200F3092A /* CheckInPluginFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D897DC206D9EB200F3092A /* CheckInPluginFactory.swift */; };
+		65D897DD206D9EB200F3092A /* CheckInPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D897DC206D9EB200F3092A /* CheckInPlugin.swift */; };
 		65D897DF206DA30C00F3092A /* CheckInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D897DE206DA30C00F3092A /* CheckInViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -92,6 +93,7 @@
 		6564D794206D929300CABE13 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		6564D797206D929300CABE13 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		6564D799206D929300CABE13 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		65ADE90A206DC226004CA884 /* DKeyPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DKeyPlugin.swift; sourceTree = "<group>"; };
 		65D89775206D937F00F3092A /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		65D89781206D93E100F3092A /* StaysModule.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = StaysModule.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		65D89783206D93E200F3092A /* StaysModule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StaysModule.h; sourceTree = "<group>"; };
@@ -113,7 +115,7 @@
 		65D897D3206D95BB00F3092A /* StayCardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StayCardViewModel.swift; sourceTree = "<group>"; };
 		65D897D5206D961D00F3092A /* AppDelegate+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppDelegate+Extensions.swift"; sourceTree = "<group>"; };
 		65D897DA206D974B00F3092A /* Stay+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Stay+Extensions.swift"; sourceTree = "<group>"; };
-		65D897DC206D9EB200F3092A /* CheckInPluginFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckInPluginFactory.swift; sourceTree = "<group>"; };
+		65D897DC206D9EB200F3092A /* CheckInPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckInPlugin.swift; sourceTree = "<group>"; };
 		65D897DE206DA30C00F3092A /* CheckInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckInViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -244,7 +246,7 @@
 			isa = PBXGroup;
 			children = (
 				65D897C9206D953700F3092A /* CheckInModule.swift */,
-				65D897DC206D9EB200F3092A /* CheckInPluginFactory.swift */,
+				65D897DC206D9EB200F3092A /* CheckInPlugin.swift */,
 				65D897DE206DA30C00F3092A /* CheckInViewController.swift */,
 			);
 			path = Source;
@@ -254,6 +256,7 @@
 			isa = PBXGroup;
 			children = (
 				65D897C7206D952C00F3092A /* DKeyModule.swift */,
+				65ADE90A206DC226004CA884 /* DKeyPlugin.swift */,
 			);
 			path = Source;
 			sourceTree = "<group>";
@@ -559,7 +562,7 @@
 			files = (
 				65D897CA206D953700F3092A /* CheckInModule.swift in Sources */,
 				65D897DF206DA30C00F3092A /* CheckInViewController.swift in Sources */,
-				65D897DD206D9EB200F3092A /* CheckInPluginFactory.swift in Sources */,
+				65D897DD206D9EB200F3092A /* CheckInPlugin.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -568,6 +571,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				65D897C8206D952C00F3092A /* DKeyModule.swift in Sources */,
+				65ADE90B206DC226004CA884 /* DKeyPlugin.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
