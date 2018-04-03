@@ -17,12 +17,6 @@ public class Stay: TilePluginStay {
     public var keyStatusString: String = ""
 }
 
-public class StaysModule: TilePluginModule {
-    public static var tilePluginFactories: [TilePluginFactory.Type] = []
-    
-    
-}
-
 public protocol StaysModuleDelegate {
     func registerPlugins(forStay stay: TilePluginStay, updateBlock: @escaping TilePluginUpdateBlock)
 }

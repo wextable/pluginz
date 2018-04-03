@@ -11,6 +11,8 @@
 		6564D795206D929300CABE13 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6564D794206D929300CABE13 /* Assets.xcassets */; };
 		6564D798206D929300CABE13 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6564D796206D929300CABE13 /* LaunchScreen.storyboard */; };
 		65ADE90B206DC226004CA884 /* DKeyPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65ADE90A206DC226004CA884 /* DKeyPlugin.swift */; };
+		65C9321820743045005F338B /* DKeyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65C9321720743045005F338B /* DKeyViewController.swift */; };
+		65C9321A20743428005F338B /* DKeyLiveKeyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65C9321920743428005F338B /* DKeyLiveKeyViewController.swift */; };
 		65D89777206D937F00F3092A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D89775206D937F00F3092A /* AppDelegate.swift */; };
 		65D89785206D93E200F3092A /* StaysModule.h in Headers */ = {isa = PBXBuildFile; fileRef = 65D89783206D93E200F3092A /* StaysModule.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		65D89788206D93E200F3092A /* StaysModule.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65D89781206D93E100F3092A /* StaysModule.framework */; };
@@ -94,6 +96,8 @@
 		6564D797206D929300CABE13 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		6564D799206D929300CABE13 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		65ADE90A206DC226004CA884 /* DKeyPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DKeyPlugin.swift; sourceTree = "<group>"; };
+		65C9321720743045005F338B /* DKeyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DKeyViewController.swift; sourceTree = "<group>"; };
+		65C9321920743428005F338B /* DKeyLiveKeyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DKeyLiveKeyViewController.swift; sourceTree = "<group>"; };
 		65D89775206D937F00F3092A /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		65D89781206D93E100F3092A /* StaysModule.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = StaysModule.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		65D89783206D93E200F3092A /* StaysModule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StaysModule.h; sourceTree = "<group>"; };
@@ -257,6 +261,8 @@
 			children = (
 				65D897C7206D952C00F3092A /* DKeyModule.swift */,
 				65ADE90A206DC226004CA884 /* DKeyPlugin.swift */,
+				65C9321720743045005F338B /* DKeyViewController.swift */,
+				65C9321920743428005F338B /* DKeyLiveKeyViewController.swift */,
 			);
 			path = Source;
 			sourceTree = "<group>";
@@ -570,8 +576,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				65C9321820743045005F338B /* DKeyViewController.swift in Sources */,
 				65D897C8206D952C00F3092A /* DKeyModule.swift in Sources */,
 				65ADE90B206DC226004CA884 /* DKeyPlugin.swift in Sources */,
+				65C9321A20743428005F338B /* DKeyLiveKeyViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

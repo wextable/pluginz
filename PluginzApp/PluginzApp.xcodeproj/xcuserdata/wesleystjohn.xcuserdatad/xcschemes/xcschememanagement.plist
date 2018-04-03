@@ -7,7 +7,7 @@
 		<key>CheckInModule.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>2</integer>
+			<integer>0</integer>
 		</dict>
 		<key>DKModule.xcscheme</key>
 		<dict>
@@ -17,7 +17,7 @@
 		<key>PluginzApp.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>0</integer>
+			<integer>1</integer>
 		</dict>
 		<key>SharedLibrary.xcscheme</key>
 		<dict>
@@ -27,7 +27,7 @@
 		<key>StaysModule.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>1</integer>
+			<integer>2</integer>
 		</dict>
 	</dict>
 </dict>

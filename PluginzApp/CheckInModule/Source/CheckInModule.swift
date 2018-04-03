@@ -16,7 +16,7 @@ public protocol CheckInStay: TilePluginStay {
 
 
 public class CheckInModule: TilePluginModule {
-    public static var tilePluginFactories: [TilePluginFactory.Type] = []
+    public static var tilePluginFactories: [TilePluginFactory.Type] = [CheckInPluginFactory.self]
     
     public static var delegate: CheckInModuleDelegate?
     

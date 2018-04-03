@@ -13,13 +13,16 @@ import DKModule
 
 
 extension Stay: CheckInStay, DKeyStay {
-
     public var keyStatus: DKeyStatus {
-        if keyStatusString == "" { return .learnMore }
-        else if keyStatusString == "" { return .canRequest }
-        else if keyStatusString == "" { return .requested }
-        else if keyStatusString == "" { return .liveKey }
-        else { return .notSupported }
+        get {
+            guard let status = DKeyStatus.init(rawValue: keyStatusString) else {
+                return .notSupported
+            }
+            return status
+        }
+        set(newValue) {
+            keyStatusString = newValue.rawValue
+        }
     }
     
 }
