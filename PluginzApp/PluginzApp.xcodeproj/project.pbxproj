@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5A76AAB7207438C30021212F /* Stays.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5A76AAB6207438C30021212F /* Stays.storyboard */; };
 		6564D793206D929300CABE13 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6564D791206D929300CABE13 /* Main.storyboard */; };
 		6564D795206D929300CABE13 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6564D794206D929300CABE13 /* Assets.xcassets */; };
 		6564D798206D929300CABE13 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6564D796206D929300CABE13 /* LaunchScreen.storyboard */; };
@@ -91,6 +92,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		5A76AAB6207438C30021212F /* Stays.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Stays.storyboard; sourceTree = "<group>"; };
 		6564D78A206D929300CABE13 /* PluginzApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PluginzApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6564D792206D929300CABE13 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		6564D794206D929300CABE13 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -225,6 +227,7 @@
 				65D89783206D93E200F3092A /* StaysModule.h */,
 				65D897B2206D945000F3092A /* Source */,
 				65D89784206D93E200F3092A /* Info.plist */,
+				5A76AAB6207438C30021212F /* Stays.storyboard */,
 			);
 			path = StaysModule;
 			sourceTree = "<group>";
@@ -518,6 +521,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5A76AAB7207438C30021212F /* Stays.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
