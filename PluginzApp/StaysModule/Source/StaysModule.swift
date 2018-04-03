@@ -17,6 +17,15 @@ public class Stay: TilePluginStay {
     public var keyStatusString: String = ""
 }
 
+public class StaysModule {
+    
+    public static var delegate: StaysModuleDelegate?
+    
+    static func registerPlugins(forStay stay: TilePluginStay, updateBlock: @escaping TilePluginUpdateBlock) {
+        delegate?.registerPlugins(forStay: stay, updateBlock: updateBlock)
+    }
+}
+
 public protocol StaysModuleDelegate {
     func registerPlugins(forStay stay: TilePluginStay, updateBlock: @escaping TilePluginUpdateBlock)
 }

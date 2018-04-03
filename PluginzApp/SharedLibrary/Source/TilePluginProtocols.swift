@@ -30,7 +30,7 @@ public protocol TilePluginFactory {
 public protocol TilePlugin  {
     
     /// This is coming from global prefs and should be unique per plugin
-    var identifier:         String { get }
+    var identifier:         String      { get }
     var accessibilityId:    String      { get }
     var title:              String?     { get }
     var titleColor:         UIColor?    { get }

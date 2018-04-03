@@ -29,6 +29,16 @@ extension AppDelegate: CheckInModuleDelegate {
         CheckInModule.registerPlugin(forStay: stay, updateBlock: updateBlock)
         DKeyModule.registerPlugin(forStay: stay, updateBlock: updateBlock)
     }
+
+}
+
+extension AppDelegate: DKeyModuleDelegate {
+    func keyRequested(stay: DKeyStay, updateBlock: @escaping TilePluginUpdateBlock) {
+        DKeyModule.registerPlugin(forStay: stay, updateBlock: updateBlock)
+    }
     
+    func keyDelivered(stay: DKeyStay, updateBlock: @escaping TilePluginUpdateBlock) {
+        DKeyModule.registerPlugin(forStay: stay, updateBlock: updateBlock)
+    }
     
 }
