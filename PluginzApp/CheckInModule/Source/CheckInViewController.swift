@@ -14,6 +14,8 @@ class CheckInViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        view.backgroundColor = UIColor(red: 248.0/255.0, green: 202.0/255.0, blue: 90.0/255.0, alpha: 1.0)
 
         let label = UILabel()
         label.frame = CGRect(x: 20, y: 60, width: 300, height: 50)
