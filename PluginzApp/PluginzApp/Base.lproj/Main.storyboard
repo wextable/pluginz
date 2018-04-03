@@ -32,6 +32,9 @@
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <state key="normal" title="Log In"/>
+                                <connections>
+                                    <segue destination="UAJ-7l-FIZ" kind="show" identifier="ShowStays" id="jLf-sl-evy"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -49,6 +52,14 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="610" y="152"/>
+        </scene>
+        <!--Stays-->
+        <scene sceneID="pde-hW-Qs5">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Stays" bundleIdentifier="com.mobileforming.StaysModule" id="UAJ-7l-FIZ" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="omx-6m-sFw" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1234" y="151"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="euk-S9-6Bk">
