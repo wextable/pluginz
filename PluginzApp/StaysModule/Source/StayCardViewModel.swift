@@ -11,7 +11,7 @@ import Foundation
 public class StayCardViewModel {
     var stay: Stay?
     
-    init(stay: Stay) {
+    public init(stay: Stay) {
         self.stay = stay
         
         StaysModule.registerPlugins(forStay: stay) { identifier, plugin, completion in

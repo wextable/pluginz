@@ -19,10 +19,19 @@ class LaunchViewController: UIViewController {
 
         // Do any additional setup after loading the view.
     }
-
-    @IBAction func logIn() {
-        let stay = Stay()
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
+        guard let stayCardVC = segue.destination as? StayCardViewController else { return }
+        
+        let stay = Stay()
+        stay.confirmationNumber = "12345678"
+        stay.ctyhocn = "DCAOTHF"
+        stay.checkInAvailable = true
+        stay.keyStatusString = "learnMore"
+        
+        let viewModel = StayCardViewModel(stay: stay)
+        stayCardVC.viewModel = viewModel
     }
 
 }

@@ -15,6 +15,8 @@ public class Stay: TilePluginStay {
     
     public var checkInAvailable: Bool = false
     public var keyStatusString: String = ""
+    
+    public init() {}
 }
 
 public class StaysModule {
