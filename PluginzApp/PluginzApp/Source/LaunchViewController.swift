@@ -7,6 +7,10 @@
 //
 
 import UIKit
+import SharedLibrary
+import StaysModule
+import CheckInModule
+import DKModule
 
 class LaunchViewController: UIViewController {
 
@@ -16,20 +20,9 @@ class LaunchViewController: UIViewController {
         // Do any additional setup after loading the view.
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    @IBAction func logIn() {
+        let stay = Stay()
+        
     }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }
