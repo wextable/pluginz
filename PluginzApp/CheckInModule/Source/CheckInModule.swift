@@ -15,12 +15,19 @@ public protocol CheckInStay: TilePluginStay {
 }
 
 
-public class CheckInModule: TilePluginModule {
-    public static var tilePluginFactories: [TilePluginFactory.Type] = [CheckInPluginFactory.self]
+final public class CheckInModule<T>: TilePluginModule where T: CheckInStay {
     
-    public static var delegate: CheckInModuleDelegate?
+    let tilePluginFactories = [CheckInPluginFactory<T>.self]
     
-    public static func checkInCompleted(stay: CheckInStay, updateBlock: @escaping TilePluginUpdateBlock) {
+    public init() {}
+    
+    public func registerPlugins(forStay stay: T, updateBlock: @escaping TilePluginUpdateBlock) {
+        tilePluginFactories.forEach { $0.registerPlugin(forStay: stay, module: self, updateBlock: updateBlock) }
+    }
+    
+    public var delegate: CheckInModuleDelegate?
+    
+    public func checkInCompleted(stay: CheckInStay, updateBlock: @escaping TilePluginUpdateBlock) {
         delegate?.checkInCompleted(stay: stay, updateBlock: updateBlock)
     }
     

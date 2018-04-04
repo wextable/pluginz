@@ -14,12 +14,9 @@ import DKModule
 
 extension AppDelegate: StaysModuleDelegate {
     
-    var tilePluginModules: [TilePluginModule.Type] { return [CheckInModule.self, DKeyModule.self] }
-    
-    func registerPlugins(forStay stay: TilePluginStay, updateBlock: @escaping TilePluginUpdateBlock) {
-        tilePluginModules.forEach {
-            $0.registerPlugin(forStay: stay, updateBlock: updateBlock)
-        }
+    func registerPlugins(forStay stay: Stay, updateBlock: @escaping TilePluginUpdateBlock) {
+        checkInModule.registerPlugins(forStay: stay, updateBlock: updateBlock)
+        dkeyModule.registerPlugins(forStay: stay, updateBlock: updateBlock)
     }
     
 }
@@ -27,11 +24,11 @@ extension AppDelegate: StaysModuleDelegate {
 extension AppDelegate: CheckInModuleDelegate {
     
     func checkInCompleted(stay: CheckInStay, updateBlock: @escaping TilePluginUpdateBlock) {
-        CheckInModule.registerPlugin(forStay: stay, updateBlock: updateBlock)
+        guard let stay = stay as? Stay else { return }
         
-        guard var dkeyStay = stay as? DKeyStay else { return }
-        dkeyStay.keyStatus = .requestKey
-        DKeyModule.registerPlugin(forStay: dkeyStay, updateBlock: updateBlock)
+        checkInModule.registerPlugins(forStay: stay, updateBlock: updateBlock)
+        stay.keyStatus = .requestKey
+        dkeyModule.registerPlugins(forStay: stay, updateBlock: updateBlock)
     }
 
 }
@@ -39,15 +36,17 @@ extension AppDelegate: CheckInModuleDelegate {
 extension AppDelegate: DKeyModuleDelegate {
     
     func keyRequested(stay: DKeyStay, updateBlock: @escaping TilePluginUpdateBlock) {
-        var dkeyStay = stay
-        dkeyStay.keyStatus = .requested
-        DKeyModule.registerPlugin(forStay: dkeyStay, updateBlock: updateBlock)
+        guard let stay = stay as? Stay else { return }
+        
+        stay.keyStatus = .requested
+        dkeyModule.registerPlugins(forStay: stay, updateBlock: updateBlock)
     }
     
     func keyDelivered(stay: DKeyStay, updateBlock: @escaping TilePluginUpdateBlock) {
-        var dkeyStay = stay
-        dkeyStay.keyStatus = .liveKey
-        DKeyModule.registerPlugin(forStay: dkeyStay, updateBlock: updateBlock)
+        guard let stay = stay as? Stay else { return }
+        
+        stay.keyStatus = .liveKey
+        dkeyModule.registerPlugins(forStay: stay, updateBlock: updateBlock)
     }
     
 }

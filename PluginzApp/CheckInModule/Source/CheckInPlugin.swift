@@ -9,29 +9,28 @@
 import Foundation
 import SharedLibrary
 
-struct CheckInPluginFactory: TilePluginFactory {
+struct CheckInPluginFactory<T>: TilePluginFactory where T: CheckInStay {
     static var identifier: String { return "CHECK_IN" }
-    
-    static func registerPlugin(forStay stay: TilePluginStay, updateBlock: @escaping TilePluginUpdateBlock) {
-        
-        guard let checkInStay = stay as? CheckInStay,
-            checkInStay.checkInAvailable else {
+    typealias PluginStay = T
+    static func registerPlugin(forStay stay: PluginStay, module: CheckInModule<T>, updateBlock: @escaping TilePluginUpdateBlock) {
+        guard
+            stay.checkInAvailable else {
             updateBlock(identifier, nil, nil)
             return
         }
         
-        let plugin = CheckInPlugin.checkIn(stay: checkInStay, identifier: identifier, updateBlock: updateBlock)
+        let plugin = CheckInPlugin.checkIn(stay: stay, identifier: identifier, module: module, updateBlock: updateBlock)
         updateBlock(identifier, plugin, nil)
     }
     
 }
 
-enum CheckInPlugin: TilePlugin {
-    case checkIn(stay: CheckInStay, identifier: String, updateBlock: TilePluginUpdateBlock)
+enum CheckInPlugin<T>: TilePlugin where T: CheckInStay {
+    case checkIn(stay: T, identifier: String, module: CheckInModule<T>, updateBlock: TilePluginUpdateBlock)
     
     var identifier: String {
         switch self {
-        case .checkIn(_, let identifier, _):
+        case .checkIn(_, let identifier, _, _):
             return identifier
         }
     }
@@ -45,13 +44,13 @@ enum CheckInPlugin: TilePlugin {
     func performAction(sender: UIViewController?) {
         
         switch self {
-        case .checkIn(var stay, _, let updateBlock):
+        case .checkIn(var stay, _, let module, let updateBlock):
             
             guard let vc = sender else { return }
             let checkInVC = CheckInViewController()
             checkInVC.completion = {
                 stay.checkInAvailable = false
-                CheckInModule.checkInCompleted(stay: stay, updateBlock: updateBlock)
+                module.checkInCompleted(stay: stay, updateBlock: updateBlock)
             }
             
             vc.present(checkInVC, animated: true, completion: nil)

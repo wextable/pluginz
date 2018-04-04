@@ -21,16 +21,25 @@ public protocol DKeyStay: TilePluginStay {
     var keyStatus: DKeyStatus { get set }
 }
 
-public class DKeyModule: TilePluginModule {
-    public static var tilePluginFactories: [TilePluginFactory.Type] = [DKeyPrimaryPluginFactory.self]
+public class DKeyModule<T>: TilePluginModule where T: DKeyStay {
     
-    public static var delegate: DKeyModuleDelegate?
+    let tilePluginFactories = [DKeyPrimaryPluginFactory<T>.self]
     
-    public static func keyRequested(stay: DKeyStay, updateBlock: @escaping TilePluginUpdateBlock) {
+    public init() {}
+    
+    public func registerPlugins(forStay stay: T, updateBlock: @escaping TilePluginUpdateBlock) {
+        tilePluginFactories.forEach { $0.registerPlugin(forStay: stay, module: self, updateBlock: updateBlock) }
+    }
+    
+    public typealias PluginStay = T
+    
+    public var delegate: DKeyModuleDelegate?
+    
+    public func keyRequested(stay: DKeyStay, updateBlock: @escaping TilePluginUpdateBlock) {
         delegate?.keyRequested(stay: stay, updateBlock: updateBlock)
     }
 
-    public static func keyDelivered(stay: DKeyStay, updateBlock: @escaping TilePluginUpdateBlock) {
+    public func keyDelivered(stay: DKeyStay, updateBlock: @escaping TilePluginUpdateBlock) {
         delegate?.keyDelivered(stay: stay, updateBlock: updateBlock)
     }
 }

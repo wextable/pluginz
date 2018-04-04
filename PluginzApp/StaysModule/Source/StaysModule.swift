@@ -9,7 +9,7 @@
 import Foundation
 import SharedLibrary
 
-public class Stay: TilePluginStay {
+public class Stay {
     public var ctyhocn: String = ""
     public var confirmationNumber: String?
     
@@ -23,11 +23,11 @@ public class StaysModule {
     
     public static var delegate: StaysModuleDelegate?
     
-    static func registerPlugins(forStay stay: TilePluginStay, updateBlock: @escaping TilePluginUpdateBlock) {
+    static func registerPlugins(forStay stay: Stay, updateBlock: @escaping TilePluginUpdateBlock) {
         delegate?.registerPlugins(forStay: stay, updateBlock: updateBlock)
     }
 }
 
 public protocol StaysModuleDelegate {
-    func registerPlugins(forStay stay: TilePluginStay, updateBlock: @escaping TilePluginUpdateBlock)
+    func registerPlugins(forStay stay: Stay, updateBlock: @escaping TilePluginUpdateBlock)
 }

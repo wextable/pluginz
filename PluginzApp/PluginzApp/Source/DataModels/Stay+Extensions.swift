@@ -7,12 +7,13 @@
 //
 
 import Foundation
+import SharedLibrary
 import StaysModule
 import CheckInModule
 import DKModule
 
 
-extension Stay: CheckInStay, DKeyStay {
+extension Stay: TilePluginStay, CheckInStay, DKeyStay {
     public var keyStatus: DKeyStatus {
         get {
             guard let status = DKeyStatus.init(rawValue: keyStatusString) else {

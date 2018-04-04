@@ -16,14 +16,15 @@ import DKModule
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-
+    
+    var checkInModule = CheckInModule<Stay>()
+    var dkeyModule = DKeyModule<Stay>()
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
-        
         StaysModule.delegate = self
-        CheckInModule.delegate = self
-        DKeyModule.delegate = self
+        checkInModule.delegate = self
+        dkeyModule.delegate = self
         
         return true
     }

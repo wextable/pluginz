@@ -13,6 +13,7 @@ public protocol TilePluginStay {
     
 }
 
+
 public typealias TilePluginUpdateBlock = (_ identifier: String?, _ Plugin: TilePlugin?, _ completion: TilePluginUpdateBlockCompletion?) -> Void
 /// hostViewController is the view controller hosts the plugin which will be the full card view controller in StaysModule
 public typealias TilePluginUpdateBlockCompletion = (_ hostViewController: UIViewController?) -> Void
@@ -20,10 +21,13 @@ public typealias TilePluginUpdateBlockCompletion = (_ hostViewController: UIView
 
 public protocol TilePluginFactory {
     
+    associatedtype PluginStay: TilePluginStay
+    associatedtype PluginModule: TilePluginModule
+    
     /// This is coming from global prefs and should be unique per plugin
     static var identifier: String { get }
     
-    static func registerPlugin(forStay stay: TilePluginStay, updateBlock: @escaping TilePluginUpdateBlock)
+    static func registerPlugin(forStay stay: PluginStay, module: PluginModule, updateBlock: @escaping TilePluginUpdateBlock)
 }
 
 
@@ -42,10 +46,8 @@ public protocol TilePlugin  {
     var view:               UIView?     { get }
     var isWide:             Bool?       { get }
     var isFlexible:         Bool        { get }
-    var supportedWildcards: [String]    { get }
     
     func performAction(sender: UIViewController?)
-    func performDeepLinkAction(sender: UIViewController?)
     
 }
 
@@ -60,26 +62,13 @@ public extension TilePlugin {
     var view:               UIView?     { return nil }
     var isWide:             Bool?       { return false }
     var isFlexible:         Bool        { return false }
-    var supportedWildcards: [String]    { return [] }
-    
-    func performDeepLinkAction(sender: UIViewController?) {
-        performAction(sender: sender)
-    }
     
 }
 
 
 public protocol TilePluginModule {
     
-    static var tilePluginFactories: [TilePluginFactory.Type] { get }
-    
-}
-
-
-public extension TilePluginModule {
-    
-    static func registerPlugin(forStay stay: TilePluginStay, updateBlock: @escaping TilePluginUpdateBlock) {
-        tilePluginFactories.forEach { $0.registerPlugin(forStay: stay, updateBlock: updateBlock) }
-    }
+    associatedtype PluginStay: TilePluginStay
+    func registerPlugins(forStay stay: PluginStay, updateBlock: @escaping TilePluginUpdateBlock)
     
 }
