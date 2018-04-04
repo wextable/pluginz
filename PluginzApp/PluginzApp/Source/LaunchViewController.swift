@@ -27,9 +27,17 @@ class LaunchViewController: UIViewController {
         let stay = Stay()
         stay.confirmationNumber = "12345678"
         stay.ctyhocn = "DCAOTHF"
-        stay.checkInAvailable = true
         stay.dKeySupported = true
-        stay.keyStatusStrings = ["learnMore", "learnMore"]
+        
+        let primarySegment = Segment()
+        primarySegment.checkInAvailable = true
+        primarySegment.keyStatusString = "learnMore"
+        
+        let secondarySegment = Segment()
+        secondarySegment.checkInAvailable = true
+        secondarySegment.keyStatusString = "learnMore"
+        
+        stay.segments = [primarySegment, secondarySegment]
         
         let viewModel = StayCardViewModel(stay: stay)
         stayCardVC.viewModel = viewModel

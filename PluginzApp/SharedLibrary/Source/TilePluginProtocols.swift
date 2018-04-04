@@ -9,7 +9,15 @@
 public protocol TilePluginStay {
     
     var ctyhocn:            String  { get }
-    var confirmationNumber: String? { get }
+    var confirmationNumber: String  { get }
+    
+    var segments:           [TilePluginSegment]     { get set }
+    
+}
+
+public protocol TilePluginSegment {
+    
+    var segmentNumber: String  { get }
     
 }
 

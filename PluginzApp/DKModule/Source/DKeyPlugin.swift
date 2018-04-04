@@ -12,12 +12,14 @@ import SharedLibrary
 extension DKeyStay {
     
     var keyStatus: DKeyStatus? {
-        if keyStatuses.contains(.learnMore) {
-            return .learnMore
+        guard let keyStatuses = (segments as? [DKeySegment])?.compactMap({ $0.keyStatus }) else { return nil }
+        
+        if keyStatuses.contains(.requested) {
+            return .requested
         } else if keyStatuses.contains(.requestKey) {
             return .requestKey
-        } else if keyStatuses.contains(.requested) {
-            return .requested
+        } else if keyStatuses.contains(.learnMore) {
+            return .learnMore
         }
         return nil
     }
@@ -42,11 +44,11 @@ struct DKeyPrimaryPluginFactory: TilePluginFactory {
             case .learnMore:
                 plugin = DKeyPlugin.learnMore(stay: dKeyStay, identifier: identifier, updateBlock: updateBlock)
             case .requestKey:
-                plugin = DKeyPlugin.requestKey(stay: dKeyStay, identifier: identifier, updateBlock: updateBlock)
+                if let segment = (dKeyStay.segments as? [DKeySegment])?.first(where: { $0.keyStatus == .requestKey }) {
+                    plugin = DKeyPlugin.requestKey(stay: dKeyStay, segment: segment, identifier: identifier, updateBlock: updateBlock)
+                }
             case .requested:
                 plugin = DKeyPlugin.requested(stay: dKeyStay, identifier: identifier, updateBlock: updateBlock)
-            default:
-                break
             }
         }
 
@@ -57,14 +59,14 @@ struct DKeyPrimaryPluginFactory: TilePluginFactory {
 
 enum DKeyPlugin: TilePlugin {
     case learnMore(stay: DKeyStay, identifier: String, updateBlock: TilePluginUpdateBlock)
-    case requestKey(stay: DKeyStay, identifier: String, updateBlock: TilePluginUpdateBlock)
+    case requestKey(stay: DKeyStay, segment: DKeySegment, identifier: String, updateBlock: TilePluginUpdateBlock)
     case requested(stay: DKeyStay, identifier: String, updateBlock: TilePluginUpdateBlock)
     case liveKey(stay: DKeyStay, identifier: String, updateBlock: TilePluginUpdateBlock)
     
     var identifier: String {
         switch self {
         case .learnMore(_, let identifier, _): return identifier
-        case .requestKey(_, let identifier, _): return identifier
+        case .requestKey(_, _, let identifier, _): return identifier
         case .requested(_, let identifier, _): return identifier
         case .liveKey(_, let identifier, _): return identifier
         }
@@ -118,12 +120,12 @@ enum DKeyPlugin: TilePlugin {
             dKeyVC.text = "Learn how to use a digital key!"
             vc.present(dKeyVC, animated: true, completion: nil)
             
-        case .requestKey(var stay, _, let updateBlock):
+        case .requestKey(let stay, let segment, _, let updateBlock):
             let dKeyVC = DKeyViewController()
             dKeyVC.text = "You can request a key now!"
             dKeyVC.buttonText = "Request Key"
             dKeyVC.completion = {
-                DKeyModule.keyRequested(stay: stay, updateBlock: updateBlock)
+                DKeyModule.keyRequested(stay: stay, segment: segment, updateBlock: updateBlock)
                 
                 // Simulate key being delivered after a delay
                 DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {

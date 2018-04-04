@@ -14,24 +14,24 @@ struct CheckInPluginFactory: TilePluginFactory {
     
     static func registerPlugin(forStay stay: TilePluginStay, updateBlock: @escaping TilePluginUpdateBlock) {
         
-        guard let checkInStay = stay as? CheckInStay,
-            checkInStay.checkInAvailable else {
+        guard let segments = stay.segments as? [CheckInSegment],
+            let segment = segments.first(where: { $0.checkInAvailable }) else {
             updateBlock(identifier, nil, nil)
             return
         }
         
-        let plugin = CheckInPlugin.checkIn(stay: checkInStay, identifier: identifier, updateBlock: updateBlock)
+        let plugin = CheckInPlugin.checkIn(stay: stay, segment: segment, identifier: identifier, updateBlock: updateBlock)
         updateBlock(identifier, plugin, nil)
     }
     
 }
 
 enum CheckInPlugin: TilePlugin {
-    case checkIn(stay: CheckInStay, identifier: String, updateBlock: TilePluginUpdateBlock)
+    case checkIn(stay: TilePluginStay, segment: TilePluginSegment, identifier: String, updateBlock: TilePluginUpdateBlock)
     
     var identifier: String {
         switch self {
-        case .checkIn(_, let identifier, _):
+        case .checkIn(_, _, let identifier, _):
             return identifier
         }
     }
@@ -45,13 +45,12 @@ enum CheckInPlugin: TilePlugin {
     func performAction(sender: UIViewController?) {
         
         switch self {
-        case .checkIn(var stay, _, let updateBlock):
+        case .checkIn(let stay, let segment, _, let updateBlock):
             
             guard let vc = sender else { return }
             let checkInVC = CheckInViewController()
             checkInVC.completion = {
-                stay.checkInAvailable = false
-                CheckInModule.checkInCompleted(stay: stay, updateBlock: updateBlock)
+                CheckInModule.checkInCompleted(stay: stay, segment: segment, updateBlock: updateBlock)
             }
             
             vc.present(checkInVC, animated: true, completion: nil)

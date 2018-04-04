@@ -11,19 +11,22 @@ import SharedLibrary
 
 public class Stay: TilePluginStay {
     public var ctyhocn: String = ""
-    public var confirmationNumber: String?
+    public var confirmationNumber: String = ""
     
     public var dKeySupported: Bool = false
     public var hasKey: Bool = false
     
-    public var segments: [Segment] = []
+    public var segments: [TilePluginSegment] = []
     
     public init() {}
 }
 
-public class Segment {
+public class Segment: TilePluginSegment {
+    public var segmentNumber: String = ""
     public var checkInAvailable: Bool = false
     public var keyStatusString: String = ""
+    
+    public init() {}
 }
 
 public class StaysModule {
