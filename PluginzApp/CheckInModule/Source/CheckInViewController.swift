@@ -11,7 +11,8 @@ import UIKit
 class CheckInViewController: UIViewController {
     
     var completion: (() -> Void)?
-
+    var roomName: String = ""
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -19,7 +20,7 @@ class CheckInViewController: UIViewController {
 
         let label = UILabel()
         label.frame = CGRect(x: 20, y: 60, width: 300, height: 50)
-        label.text = "You can check in to the hotel now!"
+        label.text = "You can check in to room \(roomName)"
         view.addSubview(label)
         
         let button = UIButton()

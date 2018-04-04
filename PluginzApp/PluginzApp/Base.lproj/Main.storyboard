@@ -31,7 +31,9 @@
                                     <constraint firstAttribute="height" constant="50" id="uBM-ko-ANB"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                <state key="normal" title="Log In"/>
+                                <state key="normal" title="Log In">
+                                    <color key="titleColor" red="0.1333333333" green="0.76862745099999996" blue="0.98823529409999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
                                 <connections>
                                     <segue destination="UAJ-7l-FIZ" kind="show" identifier="ShowStays" id="jLf-sl-evy"/>
                                 </connections>

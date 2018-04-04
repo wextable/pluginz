@@ -11,6 +11,7 @@ import SharedLibrary
 
 class StayCardCell: UICollectionViewCell {
     
+    @IBOutlet var backgroundImageView: UIImageView!
     @IBOutlet var iconImageView: UIImageView!
     @IBOutlet var titleLabel: UILabel!
     
@@ -44,7 +45,9 @@ public class StayCardViewController: UICollectionViewController {
         
         let tile = viewModel.tiles[indexPath.item]
         cell.titleLabel.text = tile.title
+        cell.backgroundImageView.image = tile.backgroundImage
         cell.iconImageView.image = tile.icon
+        cell.iconImageView.tintColor = tile.iconTintColor
     }
     
     public override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {

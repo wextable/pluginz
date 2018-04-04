@@ -32,10 +32,12 @@ class LaunchViewController: UIViewController {
         let primarySegment = Segment()
         primarySegment.checkInAvailable = true
         primarySegment.keyStatusString = "learnMore"
+        primarySegment.segmentNumber = "1"
         
         let secondarySegment = Segment()
         secondarySegment.checkInAvailable = true
         secondarySegment.keyStatusString = "learnMore"
+        secondarySegment.segmentNumber = "2"
         
         stay.segments = [primarySegment, secondarySegment]
         

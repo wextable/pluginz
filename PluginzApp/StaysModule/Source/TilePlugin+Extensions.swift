@@ -12,7 +12,7 @@ import SharedLibrary
 extension TilePlugin {
     
     fileprivate var priority: [String] {
-        return ["DKEY_PRIMARY", "CHECK_IN"]
+        return ["DKEY_PRIMARY", "DKEY_SECONDARY", "CHECK_IN"]
     }
     
     var order: Int {

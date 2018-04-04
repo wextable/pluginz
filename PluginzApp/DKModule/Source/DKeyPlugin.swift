@@ -9,10 +9,9 @@
 import Foundation
 import SharedLibrary
 
-extension DKeyStay {
-    
-    var keyStatus: DKeyStatus? {
-        guard let keyStatuses = (segments as? [DKeySegment])?.compactMap({ $0.keyStatus }) else { return nil }
+extension DKeyStay {    
+    var undeliveredKeyStatus: DKeyStatus? {
+        guard let keyStatuses = (segments as? [DKeySegment])?.flatMap({ $0.keyStatus }) else { return nil }
         
         if keyStatuses.contains(.requested) {
             return .requested
@@ -39,7 +38,7 @@ struct DKeyPrimaryPluginFactory: TilePluginFactory {
         
         if dKeyStay.hasKey {
             plugin = DKeyPlugin.liveKey(stay: dKeyStay, identifier: identifier, updateBlock: updateBlock)
-        } else if let keyStatus = dKeyStay.keyStatus {
+        } else if let keyStatus = dKeyStay.undeliveredKeyStatus {
             switch keyStatus {
             case .learnMore:
                 plugin = DKeyPlugin.learnMore(stay: dKeyStay, identifier: identifier, updateBlock: updateBlock)
@@ -49,9 +48,42 @@ struct DKeyPrimaryPluginFactory: TilePluginFactory {
                 }
             case .requested:
                 plugin = DKeyPlugin.requested(stay: dKeyStay, identifier: identifier, updateBlock: updateBlock)
+            default:
+                break
             }
         }
 
+        updateBlock(identifier, plugin, nil)
+    }
+    
+}
+
+struct DKeySecondaryPluginFactory: TilePluginFactory {
+    static var identifier: String { return "DKEY_SECONDARY" }
+    
+    static func registerPlugin(forStay stay: TilePluginStay, updateBlock: @escaping TilePluginUpdateBlock) {
+        
+        guard let dKeyStay = stay as? DKeyStay,
+            dKeyStay.hasKey else {
+            updateBlock(identifier, nil, nil)
+            return
+        }
+        
+        var plugin: DKeyPlugin?
+        
+         if let keyStatus = dKeyStay.undeliveredKeyStatus {
+            switch keyStatus {            
+            case .requestKey:
+                if let segment = (dKeyStay.segments as? [DKeySegment])?.first(where: { $0.keyStatus == .requestKey }) {
+                    plugin = DKeyPlugin.requestKey(stay: dKeyStay, segment: segment, identifier: identifier, updateBlock: updateBlock)
+                }
+            case .requested:
+                plugin = DKeyPlugin.requested(stay: dKeyStay, identifier: identifier, updateBlock: updateBlock)
+            default:
+                break
+            }
+        }
+        
         updateBlock(identifier, plugin, nil)
     }
     
@@ -111,6 +143,24 @@ enum DKeyPlugin: TilePlugin {
         }
     }
     
+    var iconTintColor: UIColor? {
+        switch self {
+        case .liveKey:
+            return .white
+        default:
+            return .blue
+        }
+    }
+    
+    var backgroundImage: UIImage? {
+        switch self {
+        case .liveKey:
+            return UIImage(named:"fullcard_dk_green_bg")
+        default:
+            return nil
+        }
+    }
+    
     func performAction(sender: UIViewController?) {
         guard let vc = sender else { return }
         
@@ -122,14 +172,14 @@ enum DKeyPlugin: TilePlugin {
             
         case .requestKey(let stay, let segment, _, let updateBlock):
             let dKeyVC = DKeyViewController()
-            dKeyVC.text = "You can request a key now!"
+            dKeyVC.text = "You can request a key now for room \(segment.segmentNumber)"
             dKeyVC.buttonText = "Request Key"
             dKeyVC.completion = {
                 DKeyModule.keyRequested(stay: stay, segment: segment, updateBlock: updateBlock)
                 
                 // Simulate key being delivered after a delay
                 DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
-                    DKeyModule.keyDelivered(stay: stay, updateBlock: updateBlock)
+                    DKeyModule.keyDelivered(stay: stay, segment: segment, updateBlock: updateBlock)
                 }
             }
             vc.present(dKeyVC, animated: true, completion: nil)
@@ -137,8 +187,13 @@ enum DKeyPlugin: TilePlugin {
         case .requested:
             break
             
-        case .liveKey:
+        case .liveKey(let stay, _, _):
             let keyCardVC = DKeyLiveKeyViewController()
+            if let dKeySegments = stay.segments as? [DKeySegment] {
+                let roomNames: [String] = dKeySegments.filter { $0.keyStatus == .delivered }
+                    .flatMap { $0.segmentNumber }
+                keyCardVC.roomNames = roomNames
+            }
             vc.present(keyCardVC, animated: true, completion: nil)
     
         }

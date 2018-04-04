@@ -50,10 +50,10 @@ extension AppDelegate: DKeyModuleDelegate {
         DKeyModule.registerPlugin(forStay: stay, updateBlock: updateBlock)
     }
     
-    func keyDelivered(stay: DKeyStay, updateBlock: @escaping TilePluginUpdateBlock) {
-        var dkeyStay = stay
-        dkeyStay.hasKey = true
-        DKeyModule.registerPlugin(forStay: dkeyStay, updateBlock: updateBlock)
+    func keyDelivered(stay: DKeyStay, segment: DKeySegment, updateBlock: @escaping TilePluginUpdateBlock) {
+        var dkeySegment = segment
+        dkeySegment.keyStatus = .delivered
+        DKeyModule.registerPlugin(forStay: stay, updateBlock: updateBlock)
     }
     
 }

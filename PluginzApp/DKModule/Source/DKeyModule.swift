@@ -13,11 +13,17 @@ public enum DKeyStatus: String {
     case learnMore
     case requestKey
     case requested
+    case delivered
 }
 
 public protocol DKeyStay: TilePluginStay {
     var dKeySupported: Bool         { get set }
-    var hasKey: Bool                { get set }
+}
+
+extension DKeyStay {
+    var hasKey: Bool {
+        return (segments as? [DKeySegment])?.contains(where: { $0.keyStatus == .delivered }) ?? false
+    }
     
 }
 
@@ -26,7 +32,7 @@ public protocol DKeySegment:TilePluginSegment {
 }
 
 public class DKeyModule: TilePluginModule {
-    public static var tilePluginFactories: [TilePluginFactory.Type] = [DKeyPrimaryPluginFactory.self]
+    public static var tilePluginFactories: [TilePluginFactory.Type] = [DKeyPrimaryPluginFactory.self, DKeySecondaryPluginFactory.self]
     
     public static var delegate: DKeyModuleDelegate?
     
@@ -34,12 +40,12 @@ public class DKeyModule: TilePluginModule {
         delegate?.keyRequested(stay: stay, segment: segment, updateBlock: updateBlock)
     }
 
-    public static func keyDelivered(stay: DKeyStay, updateBlock: @escaping TilePluginUpdateBlock) {
-        delegate?.keyDelivered(stay: stay, updateBlock: updateBlock)
+    public static func keyDelivered(stay: DKeyStay, segment: DKeySegment, updateBlock: @escaping TilePluginUpdateBlock) {
+        delegate?.keyDelivered(stay: stay, segment: segment, updateBlock: updateBlock)
     }
 }
 
 public protocol DKeyModuleDelegate {
     func keyRequested(stay: DKeyStay, segment: DKeySegment, updateBlock: @escaping TilePluginUpdateBlock)
-    func keyDelivered(stay: DKeyStay, updateBlock: @escaping TilePluginUpdateBlock)
+    func keyDelivered(stay: DKeyStay, segment: DKeySegment, updateBlock: @escaping TilePluginUpdateBlock)
 }

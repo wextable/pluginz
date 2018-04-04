@@ -10,6 +10,8 @@ import Foundation
 
 class DKeyLiveKeyViewController: UIViewController {
 
+    var roomNames: [String] = [""]
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -17,12 +19,13 @@ class DKeyLiveKeyViewController: UIViewController {
         
         let label = UILabel()
         label.frame = CGRect(x: 20, y: 60, width: 500, height: 50)
-        label.text = "You can unlock your room now!"
+        let text = "You can unlock \(roomNames.map{ "room " + $0 }.joined(separator: ", "))"
+        label.text = text
         view.addSubview(label)
         
         let button = UIButton()
         button.frame = CGRect(x: 20, y: 120, width: 200, height: 40)
-        button.setTitle("Unlock Room 418", for: .normal)
+        button.setTitle("Unlock Nearest Room", for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 20, weight: .semibold)
         button.addTarget(self, action: #selector(unlockTapped), for: .touchUpInside)
         view.addSubview(button)

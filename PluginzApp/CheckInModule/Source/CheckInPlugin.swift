@@ -49,6 +49,7 @@ enum CheckInPlugin: TilePlugin {
             
             guard let vc = sender else { return }
             let checkInVC = CheckInViewController()
+            checkInVC.roomName = segment.segmentNumber
             checkInVC.completion = {
                 CheckInModule.checkInCompleted(stay: stay, segment: segment, updateBlock: updateBlock)
             }

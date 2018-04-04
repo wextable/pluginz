@@ -36,10 +36,13 @@
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lry-ug-4VD">
                                             <rect key="frame" x="0.0" y="0.0" width="200" height="200"/>
                                             <subviews>
-                                                <view alpha="0.90000000000000002" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VRB-5h-8va" userLabel="Upper View">
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VRB-5h-8va" userLabel="Upper View">
                                                     <rect key="frame" x="0.0" y="0.0" width="200" height="143"/>
                                                     <subviews>
-                                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="fullcard_dkSolid" translatesAutoresizingMaskIntoConstraints="NO" id="JmC-jP-a1Z">
+                                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="M0W-JR-IJ7">
+                                                            <rect key="frame" x="0.0" y="0.0" width="200" height="143"/>
+                                                        </imageView>
+                                                        <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="fullcard_dkSolid" translatesAutoresizingMaskIntoConstraints="NO" id="JmC-jP-a1Z">
                                                             <rect key="frame" x="74.5" y="46" width="50" height="50"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" secondItem="JmC-jP-a1Z" secondAttribute="height" multiplier="1:1" id="Ehr-Gh-PSM"/>
@@ -47,10 +50,14 @@
                                                             </constraints>
                                                         </imageView>
                                                     </subviews>
-                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <color key="backgroundColor" white="1" alpha="0.90000000000000002" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <constraints>
+                                                        <constraint firstItem="M0W-JR-IJ7" firstAttribute="leading" secondItem="VRB-5h-8va" secondAttribute="leading" id="3hG-Iw-c95"/>
                                                         <constraint firstItem="JmC-jP-a1Z" firstAttribute="centerX" secondItem="VRB-5h-8va" secondAttribute="centerX" id="JcH-Xd-XwO"/>
+                                                        <constraint firstAttribute="trailing" secondItem="M0W-JR-IJ7" secondAttribute="trailing" id="QQ0-VZ-JJ2"/>
                                                         <constraint firstItem="JmC-jP-a1Z" firstAttribute="centerY" secondItem="VRB-5h-8va" secondAttribute="centerY" id="YBy-5k-FGm"/>
+                                                        <constraint firstAttribute="bottom" secondItem="M0W-JR-IJ7" secondAttribute="bottom" id="adM-wy-kSB"/>
+                                                        <constraint firstItem="M0W-JR-IJ7" firstAttribute="top" secondItem="VRB-5h-8va" secondAttribute="top" id="puz-3g-qpM"/>
                                                     </constraints>
                                                 </view>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AHg-tO-XZ0" userLabel="Lower View">
@@ -93,6 +100,7 @@
                                 </constraints>
                                 <size key="customSize" width="200" height="200"/>
                                 <connections>
+                                    <outlet property="backgroundImageView" destination="M0W-JR-IJ7" id="lR4-nw-hEZ"/>
                                     <outlet property="iconImageView" destination="JmC-jP-a1Z" id="cZI-dg-zvO"/>
                                     <outlet property="titleLabel" destination="LZ4-C9-YSN" id="2k4-ol-pkk"/>
                                 </connections>
@@ -110,6 +118,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="fullcard_dkSolid" width="86" height="86"/>
+        <image name="fullcard_dkSolid" width="70" height="70"/>
     </resources>
 </document>
