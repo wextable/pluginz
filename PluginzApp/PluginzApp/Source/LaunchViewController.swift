@@ -28,7 +28,8 @@ class LaunchViewController: UIViewController {
         stay.confirmationNumber = "12345678"
         stay.ctyhocn = "DCAOTHF"
         stay.checkInAvailable = true
-        stay.keyStatusString = "learnMore"
+        stay.dKeySupported = true
+        stay.keyStatusStrings = ["learnMore", "learnMore"]
         
         let viewModel = StayCardViewModel(stay: stay)
         stayCardVC.viewModel = viewModel

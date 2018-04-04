@@ -9,6 +9,20 @@
 import Foundation
 import SharedLibrary
 
+extension DKeyStay {
+    
+    var keyStatus: DKeyStatus? {
+        if keyStatuses.contains(.learnMore) {
+            return .learnMore
+        } else if keyStatuses.contains(.requestKey) {
+            return .requestKey
+        } else if keyStatuses.contains(.requested) {
+            return .requested
+        }
+        return nil
+    }
+}
+
 struct DKeyPrimaryPluginFactory: TilePluginFactory {
     static var identifier: String { return "DKEY_PRIMARY" }
     
@@ -20,19 +34,22 @@ struct DKeyPrimaryPluginFactory: TilePluginFactory {
         }
         
         var plugin: DKeyPlugin?
-        switch dKeyStay.keyStatus {
-        case .learnMore:
-            plugin = DKeyPlugin.learnMore(stay: dKeyStay, identifier: identifier, updateBlock: updateBlock)
-        case .requestKey:
-            plugin = DKeyPlugin.requestKey(stay: dKeyStay, identifier: identifier, updateBlock: updateBlock)
-        case .requested:
-            plugin = DKeyPlugin.requested(stay: dKeyStay, identifier: identifier, updateBlock: updateBlock)
-        case .liveKey:
-            plugin = DKeyPlugin.liveKey(stay: dKeyStay, identifier: identifier, updateBlock: updateBlock)
-        default:
-            break
-        }
         
+        if dKeyStay.hasKey {
+            plugin = DKeyPlugin.liveKey(stay: dKeyStay, identifier: identifier, updateBlock: updateBlock)
+        } else if let keyStatus = dKeyStay.keyStatus {
+            switch keyStatus {
+            case .learnMore:
+                plugin = DKeyPlugin.learnMore(stay: dKeyStay, identifier: identifier, updateBlock: updateBlock)
+            case .requestKey:
+                plugin = DKeyPlugin.requestKey(stay: dKeyStay, identifier: identifier, updateBlock: updateBlock)
+            case .requested:
+                plugin = DKeyPlugin.requested(stay: dKeyStay, identifier: identifier, updateBlock: updateBlock)
+            default:
+                break
+            }
+        }
+
         updateBlock(identifier, plugin, nil)
     }
     
@@ -106,12 +123,10 @@ enum DKeyPlugin: TilePlugin {
             dKeyVC.text = "You can request a key now!"
             dKeyVC.buttonText = "Request Key"
             dKeyVC.completion = {
-                stay.keyStatus = .requested
                 DKeyModule.keyRequested(stay: stay, updateBlock: updateBlock)
                 
                 // Simulate key being delivered after a delay
                 DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
-                    stay.keyStatus = .liveKey
                     DKeyModule.keyDelivered(stay: stay, updateBlock: updateBlock)
                 }
             }

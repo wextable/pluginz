@@ -13,15 +13,17 @@ import DKModule
 
 
 extension Stay: CheckInStay, DKeyStay {
-    public var keyStatus: DKeyStatus {
+
+    public var keyStatuses: [DKeyStatus] {
         get {
-            guard let status = DKeyStatus.init(rawValue: keyStatusString) else {
-                return .notSupported
+            return keyStatusStrings.flatMap {
+                DKeyStatus.init(rawValue: $0)
             }
-            return status
         }
         set(newValue) {
-            keyStatusString = newValue.rawValue
+            keyStatusStrings = newValue.map {
+                $0.rawValue
+            }
         }
     }
     

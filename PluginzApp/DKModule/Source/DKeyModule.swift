@@ -10,15 +10,15 @@ import Foundation
 import SharedLibrary
 
 public enum DKeyStatus: String {
-    case notSupported
     case learnMore
     case requestKey
     case requested
-    case liveKey
 }
 
 public protocol DKeyStay: TilePluginStay {
-    var keyStatus: DKeyStatus { get set }
+    var dKeySupported: Bool         { get set }
+    var hasKey: Bool                { get set }
+    var keyStatuses: [DKeyStatus]   { get set }
 }
 
 public class DKeyModule: TilePluginModule {

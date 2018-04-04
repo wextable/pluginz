@@ -29,7 +29,8 @@ extension AppDelegate: CheckInModuleDelegate {
     func checkInCompleted(stay: CheckInStay, updateBlock: @escaping TilePluginUpdateBlock) {
         CheckInModule.registerPlugin(forStay: stay, updateBlock: updateBlock)
         
-        guard var dkeyStay = stay as? DKeyStay else { return }
+        guard var dkeyStay = stay as? DKeyStay,
+            dkeyStay.dKeySupported else { return }
         dkeyStay.keyStatus = .requestKey
         DKeyModule.registerPlugin(forStay: dkeyStay, updateBlock: updateBlock)
     }
@@ -46,7 +47,7 @@ extension AppDelegate: DKeyModuleDelegate {
     
     func keyDelivered(stay: DKeyStay, updateBlock: @escaping TilePluginUpdateBlock) {
         var dkeyStay = stay
-        dkeyStay.keyStatus = .liveKey
+        dkeyStay.hasKey = true
         DKeyModule.registerPlugin(forStay: dkeyStay, updateBlock: updateBlock)
     }
     

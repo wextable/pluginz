@@ -13,10 +13,17 @@ public class Stay: TilePluginStay {
     public var ctyhocn: String = ""
     public var confirmationNumber: String?
     
-    public var checkInAvailable: Bool = false
-    public var keyStatusString: String = ""
+    public var dKeySupported: Bool = false
+    public var hasKey: Bool = false
+    
+    public var segments: [Segment] = []
     
     public init() {}
+}
+
+public class Segment {
+    public var checkInAvailable: Bool = false
+    public var keyStatusString: String = ""
 }
 
 public class StaysModule {
