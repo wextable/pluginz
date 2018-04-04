@@ -16,34 +16,36 @@ class DKeyLiveKeyViewController: UIViewController {
         view.backgroundColor = UIColor(red: 198.0/255.0, green: 229.0/255.0, blue: 112.0/255.0, alpha: 1.0)
         
         let label = UILabel()
-        label.frame = CGRect(x: 20, y: 60, width: 300, height: 50)
+        label.frame = CGRect(x: 20, y: 60, width: 500, height: 50)
         label.text = "You can unlock your room now!"
         view.addSubview(label)
         
         let button = UIButton()
-        button.frame = CGRect(x: 20, y: 120, width: 120, height: 40)
+        button.frame = CGRect(x: 20, y: 120, width: 200, height: 40)
         button.setTitle("Unlock Room 418", for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 20, weight: .semibold)
         button.addTarget(self, action: #selector(unlockTapped), for: .touchUpInside)
         view.addSubview(button)
         
         let button2 = UIButton()
         button2.frame = CGRect(x: 20, y: 200, width: 120, height: 40)
         button2.setTitle("Done", for: .normal)
-        button2.addTarget(self, action: #selector(dismiss(animated:completion:)), for: .touchUpInside)
-        view.addSubview(button)
+        button2.titleLabel?.font = UIFont.systemFont(ofSize: 20, weight: .semibold)
+        button2.addTarget(self, action: #selector(doneTapped), for: .touchUpInside)
+        view.addSubview(button2)
         
     }
     
     
     @objc func unlockTapped() {
         let alert = UIAlertController(title: "Door Unlocked!", message: "You did it, buddy!", preferredStyle: .alert)
+        let action = UIAlertAction(title: "OK", style: .default, handler: nil)
+        alert.addAction(action)
         self.present(alert, animated: true, completion: nil)
     }
     
-//    @objc func dismiss() {
-//        dismiss(animated: true)
-//    }
-    
-    
+    @objc func doneTapped() {
+        dismiss(animated: true)
+    }
     
 }

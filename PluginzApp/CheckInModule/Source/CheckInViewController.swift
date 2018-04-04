@@ -25,6 +25,7 @@ class CheckInViewController: UIViewController {
         let button = UIButton()
         button.frame = CGRect(x: 20, y: 120, width: 120, height: 40)
         button.setTitle("Check In", for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 20, weight: .semibold)
         button.addTarget(self, action: #selector(checkInTapped), for: .touchUpInside)
         view.addSubview(button)
         
