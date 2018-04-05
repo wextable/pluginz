@@ -12,7 +12,7 @@ import SharedLibrary
 extension TilePlugin {
     
     // Sort order for all plugin factories
-    // TODOL: this should move to the APP layer, but be accessible via some protocol...
+    // TODO: this should move to the APP layer, but be accessible via some protocol...
     fileprivate var priority: [String] {
         return ["DKEY_PRIMARY", "DKEY_SECONDARY", "CHECK_IN", "HOTEL_IMAGES"]
     }
