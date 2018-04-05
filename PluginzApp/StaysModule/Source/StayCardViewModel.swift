@@ -38,6 +38,7 @@ public class StayCardViewModel {
     weak var delegate: HHStayCardViewModelDelegate?
     var tempTiles: [TilePlugin] = []
     var tiles: [TilePlugin] = []
+    var wideness: [Bool] = []
     
     public init(stay: Stay) {
         self.stay = stay
@@ -99,11 +100,13 @@ public class StayCardViewModel {
     
     public func layoutTiles() {
         tiles = tempTiles
+        wideness = tiles.wideness()
         delegate?.didUpdateTiles(updater: nil, newTiles: [])
     }
     
     func updateDataSource(newTiles: [TilePlugin]) {
         tiles = newTiles
+        wideness = tiles.wideness()
     }
     
 }

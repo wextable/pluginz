@@ -14,11 +14,11 @@ import DKModule
 
 extension AppDelegate: StaysModuleDelegate {
     
-    var tilePluginModules: [TilePluginModule.Type] { return [CheckInModule.self, DKeyModule.self] }
+    var tilePluginModules: [TilePluginModule.Type] { return [CheckInModule.self, DKeyModule.self, StaysModule.self] }
     
     func registerPlugins(forStay stay: TilePluginStay, updateBlock: @escaping TilePluginUpdateBlock) {
         tilePluginModules.forEach {
-            $0.registerPlugin(forStay: stay, updateBlock: updateBlock)
+            $0.registerPlugins(forStay: stay, updateBlock: updateBlock)
         }
     }
     
@@ -30,12 +30,12 @@ extension AppDelegate: CheckInModuleDelegate {
         if var segment = segment as? CheckInSegment {
             segment.checkInAvailable = false
         }
-        CheckInModule.registerPlugin(forStay: stay, updateBlock: updateBlock)
+        CheckInModule.registerPlugins(forStay: stay, updateBlock: updateBlock)
         
         if let stay = stay as? DKeyStay, var dkeySegment = segment as? DKeySegment, stay.dKeySupported {
             dkeySegment.keyStatus = .requestKey
         }
-        DKeyModule.registerPlugin(forStay: stay, updateBlock: updateBlock)
+        DKeyModule.registerPlugins(forStay: stay, updateBlock: updateBlock)
     }
 
 }
@@ -47,13 +47,13 @@ extension AppDelegate: DKeyModuleDelegate {
         
         var dkeySegment = segment
         dkeySegment.keyStatus = .requested
-        DKeyModule.registerPlugin(forStay: stay, updateBlock: updateBlock)
+        DKeyModule.registerPlugins(forStay: stay, updateBlock: updateBlock)
     }
     
     func keyDelivered(stay: DKeyStay, segment: DKeySegment, updateBlock: @escaping TilePluginUpdateBlock) {
         var dkeySegment = segment
         dkeySegment.keyStatus = .delivered
-        DKeyModule.registerPlugin(forStay: stay, updateBlock: updateBlock)
+        DKeyModule.registerPlugins(forStay: stay, updateBlock: updateBlock)
     }
     
 }

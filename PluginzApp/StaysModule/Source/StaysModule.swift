@@ -12,6 +12,7 @@ import SharedLibrary
 public class Stay: TilePluginStay {
     public var ctyhocn: String = ""
     public var confirmationNumber: String = ""
+    public var hotelImageName: String = ""
     
     public var dKeySupported: Bool = false
     public var hasKey: Bool = false
@@ -29,7 +30,8 @@ public class Segment: TilePluginSegment {
     public init() {}
 }
 
-public class StaysModule {
+public class StaysModule: TilePluginModule {
+    public static var tilePluginFactories: [TilePluginFactory.Type] = [HotelImagesPluginFactory.self]
     
     public static var delegate: StaysModuleDelegate?
     

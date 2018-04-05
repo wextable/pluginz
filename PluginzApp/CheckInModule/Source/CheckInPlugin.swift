@@ -42,6 +42,8 @@ enum CheckInPlugin: TilePlugin {
     
     var icon: UIImage? { return UIImage(named:"fullcard_checkinAvail") }
     
+    var routableDeeplinks: [String] { return ["checkIn"] }
+    
     func performAction(sender: UIViewController?) {
         
         switch self {

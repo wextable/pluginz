@@ -22,27 +22,52 @@ class LaunchViewController: UIViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
-        guard let stayCardVC = segue.destination as? StayCardViewController else { return }
+        guard let stayCardVC = segue.destination as? StayCardViewController,
+            let button = sender as? UIButton else { return }
         
-        let stay = Stay()
-        stay.confirmationNumber = "12345678"
-        stay.ctyhocn = "DCAOTHF"
-        stay.dKeySupported = true
+        if button.title(for: .normal) == "Stay 1" {
         
-        let primarySegment = Segment()
-        primarySegment.checkInAvailable = true
-        primarySegment.keyStatusString = "learnMore"
-        primarySegment.segmentNumber = "1"
+            let stay = Stay()
+            stay.confirmationNumber = "12345678"
+            stay.ctyhocn = "DCAOTHF"
+            stay.dKeySupported = true
+            stay.hotelImageName = "hotel"
+            
+            let primarySegment = Segment()
+            primarySegment.checkInAvailable = true
+            primarySegment.keyStatusString = "learnMore"
+            primarySegment.segmentNumber = "1"
+            
+            let secondarySegment = Segment()
+            secondarySegment.checkInAvailable = true
+            secondarySegment.keyStatusString = "learnMore"
+            secondarySegment.segmentNumber = "2"
+            
+            stay.segments = [primarySegment, secondarySegment]
+            
+            let viewModel = StayCardViewModel(stay: stay)
+            stayCardVC.viewModel = viewModel
+            
+        } else {
+            let stay = Stay()
+            stay.confirmationNumber = "87654321"
+            stay.ctyhocn = "DCAOTHF"
+            stay.dKeySupported = true
+            stay.hotelImageName = "hotel"
+            
+            let primarySegment = Segment()
+            primarySegment.checkInAvailable = false
+            primarySegment.keyStatusString = "delivered"
+            primarySegment.segmentNumber = "1"
+            
+            stay.segments = [primarySegment]
+            
+            let viewModel = StayCardViewModel(stay: stay)
+            stayCardVC.viewModel = viewModel
+            stayCardVC.deeplink = "key"
+        }
         
-        let secondarySegment = Segment()
-        secondarySegment.checkInAvailable = true
-        secondarySegment.keyStatusString = "learnMore"
-        secondarySegment.segmentNumber = "2"
         
-        stay.segments = [primarySegment, secondarySegment]
-        
-        let viewModel = StayCardViewModel(stay: stay)
-        stayCardVC.viewModel = viewModel
     }
 
 }

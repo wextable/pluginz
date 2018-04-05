@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import SharedLibrary
 import StaysModule
 import CheckInModule
 import DKModule
@@ -17,9 +16,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
-
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        
         
         StaysModule.delegate = self
         CheckInModule.delegate = self

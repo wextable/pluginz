@@ -20,12 +20,18 @@ class StayCardCell: UICollectionViewCell {
 public class StayCardViewController: UICollectionViewController {
 
     public var viewModel: StayCardViewModel!
+    public var deeplink: String?
     
     public override func viewDidLoad() {
         super.viewDidLoad()
         
         viewModel.delegate = self
         viewModel.registerPlugins()
+    }
+    
+    public override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        handleDeeplink()
     }
     
     public override func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -61,7 +67,11 @@ public class StayCardViewController: UICollectionViewController {
 extension StayCardViewController: UICollectionViewDelegateFlowLayout {
     
     public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 150, height: 130)
+        
+        if viewModel.wideness.count > indexPath.item, viewModel.wideness[indexPath.item] == true {
+            return CGSize(width: 300, height: 130)
+        }
+        return CGSize(width: 150, height: 130)        
     }
     
     public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
@@ -101,4 +111,20 @@ extension StayCardViewController: HHStayCardViewModelDelegate {
         }
     }
     
+}
+
+
+// MARK: Deeplinks
+extension StayCardViewController {
+    
+    func handleDeeplink() {
+        defer { deeplink = nil }
+        
+        guard let deeplink = deeplink,
+            let tileForDeeplink = self.viewModel.tiles.first(where: { $0.routableDeeplinks.contains(deeplink) } ) else {
+                return
+        }
+        
+        tileForDeeplink.performDeepLinkAction(deeplink: deeplink, sender: self)
+    }
 }

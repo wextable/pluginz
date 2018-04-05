@@ -12,13 +12,11 @@ public protocol TilePluginStay {
     var confirmationNumber: String  { get }
     
     var segments:           [TilePluginSegment]     { get set }
-    
 }
 
 public protocol TilePluginSegment {
     
     var segmentNumber: String  { get }
-    
 }
 
 public typealias TilePluginUpdateBlock = (_ identifier: String?, _ Plugin: TilePlugin?, _ completion: TilePluginUpdateBlockCompletion?) -> Void
@@ -42,35 +40,30 @@ public protocol TilePlugin  {
     var accessibilityId:    String      { get }
     var title:              String?     { get }
     var titleColor:         UIColor?    { get }
-    var subtitle:           String?     { get }
-    var subtitleColor:      UIColor?    { get }
     var icon:               UIImage?    { get }
     var iconTintColor:      UIColor?    { get }
     var backgroundImage:    UIImage?    { get }
     var view:               UIView?     { get }
     var isWide:             Bool?       { get }
-    var isFlexible:         Bool        { get }
-    var supportedWildcards: [String]    { get }
+    var routableDeeplinks:  [String]    { get }
     
     func performAction(sender: UIViewController?)
-    func performDeepLinkAction(sender: UIViewController?)
+    func performDeepLinkAction(deeplink: String, sender: UIViewController?)
     
 }
 
 
 public extension TilePlugin {
-    
+    var title:              String?     { return nil }
     var titleColor:         UIColor?    { return .black }
-    var subtitle:           String?     { return nil }
-    var subtitleColor:      UIColor?    { return .blue }
+    var icon:               UIImage?    { return nil }
     var iconTintColor:      UIColor?    { return .blue }
     var backgroundImage:    UIImage?    { return nil } 
     var view:               UIView?     { return nil }
     var isWide:             Bool?       { return false }
-    var isFlexible:         Bool        { return false }
-    var supportedWildcards: [String]    { return [] }
+    var routableDeeplinks:  [String]    { return [] }
     
-    func performDeepLinkAction(sender: UIViewController?) {
+    func performDeepLinkAction(deeplink: String, sender: UIViewController?) {
         performAction(sender: sender)
     }
     
@@ -86,7 +79,7 @@ public protocol TilePluginModule {
 
 public extension TilePluginModule {
     
-    static func registerPlugin(forStay stay: TilePluginStay, updateBlock: @escaping TilePluginUpdateBlock) {
+    static func registerPlugins(forStay stay: TilePluginStay, updateBlock: @escaping TilePluginUpdateBlock) {
         tilePluginFactories.forEach { $0.registerPlugin(forStay: stay, updateBlock: updateBlock) }
     }
     

@@ -9,7 +9,7 @@
 import Foundation
 import SharedLibrary
 
-extension DKeyStay {    
+extension DKeyStay {
     var undeliveredKeyStatus: DKeyStatus? {
         guard let keyStatuses = (segments as? [DKeySegment])?.flatMap({ $0.keyStatus }) else { return nil }
         
@@ -158,6 +158,19 @@ enum DKeyPlugin: TilePlugin {
             return UIImage(named:"fullcard_dk_green_bg")
         default:
             return nil
+        }
+    }
+    
+    var routableDeeplinks: [String] {
+        switch self {
+        case .learnMore:
+            return ["learnMore"]
+        case .requestKey:
+            return ["requestKey"]
+        case .requested:
+            return []
+        case .liveKey:
+            return ["key"]
         }
     }
     
