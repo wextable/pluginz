@@ -13,15 +13,17 @@ struct HotelImagesPluginFactory: TilePluginFactory {
     static var identifier: String { return "HOTEL_IMAGES" }
     
     static func registerPlugin(forStay stay: TilePluginStay, updateBlock: @escaping TilePluginUpdateBlock) {
-        
+        // The only TilePlugin we deal with here is the hotel images plugin, and it applies to every stay, so we are ready to create it
         let plugin = StaysPlugin.images(stay: stay, identifier: identifier, updateBlock: updateBlock)
+        
+        // Call the update block to update the UI
         updateBlock(identifier, plugin, nil)
     }
     
 }
 
 enum StaysPlugin: TilePlugin {
-
+    // only 1 case for StaysPlugin
     case images(stay: TilePluginStay, identifier: String, updateBlock: TilePluginUpdateBlock)
     
     var identifier: String {
@@ -51,7 +53,7 @@ enum StaysPlugin: TilePlugin {
         
         switch self {
         case .images(let stay, _, _):
-            
+            // Launch a VC with a full screen image of the hotel
             guard let vc = sender,
                 let stay = stay as? Stay else { return }
             let imageVC = ImageViewController()

@@ -17,7 +17,6 @@ class ImageViewController: UIViewController {
         
         view.backgroundColor = UIColor.gray
 
-        // Do any additional setup after loading the view.
         let imageView = UIImageView()
         imageView.frame = view.bounds
         imageView.contentMode = .scaleAspectFill

@@ -54,6 +54,7 @@ public class StayCardViewController: UICollectionViewController {
         cell.backgroundImageView.image = tile.backgroundImage
         cell.iconImageView.image = tile.icon
         cell.iconImageView.tintColor = tile.iconTintColor
+        cell.layer.cornerRadius = 4.0
     }
     
     public override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {

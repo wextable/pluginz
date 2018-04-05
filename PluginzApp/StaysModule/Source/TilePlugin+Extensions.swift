@@ -11,6 +11,8 @@ import SharedLibrary
 
 extension TilePlugin {
     
+    // Sort order for all plugin factories
+    // TODOL: this should move to the APP layer, but be accessible via some protocol...
     fileprivate var priority: [String] {
         return ["DKEY_PRIMARY", "DKEY_SECONDARY", "CHECK_IN", "HOTEL_IMAGES"]
     }
@@ -23,6 +25,7 @@ extension TilePlugin {
 
 extension Array where Iterator.Element == TilePlugin {
     
+    // Wideness is an array of Bools indicating for each tile if the VC should lay out the tile in single or double width
     func wideness() -> [Bool] {
         let cellsPerRow = 2
         var total = 0

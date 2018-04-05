@@ -28,7 +28,6 @@ struct CollectionViewUpdater {
 protocol HHStayCardViewModelDelegate: class {
     
     func didUpdateTiles(updater: CollectionViewUpdater?, newTiles: [TilePlugin])
-    
 }
 
 
@@ -49,7 +48,12 @@ public class StayCardViewModel {
         shouldAnimateCells = false
         
         StaysModule.registerPlugins(forStay: stay) { [weak self] (identifier, plugin, completion) in
+            
+            // The update block is the same for every plugin
+            // We update our data source and refresh the UI
             self?.updateTiles(identifier, plugin: plugin)
+            
+            // And call completion
             if let viewController = self?.delegate as? UIViewController {
                 completion?(viewController)
             }

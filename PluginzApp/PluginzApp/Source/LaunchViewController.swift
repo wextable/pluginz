@@ -26,7 +26,8 @@ class LaunchViewController: UIViewController {
             let button = sender as? UIButton else { return }
         
         if button.title(for: .normal) == "Stay 1" {
-        
+            // Stay 1 has 2 segments, both ready for check in
+            
             let stay = Stay()
             stay.confirmationNumber = "12345678"
             stay.ctyhocn = "DCAOTHF"
@@ -49,6 +50,7 @@ class LaunchViewController: UIViewController {
             stayCardVC.viewModel = viewModel
             
         } else {
+            // Stay 2 has 1 segment, already with a digital key
             let stay = Stay()
             stay.confirmationNumber = "87654321"
             stay.ctyhocn = "DCAOTHF"
@@ -64,6 +66,8 @@ class LaunchViewController: UIViewController {
             
             let viewModel = StayCardViewModel(stay: stay)
             stayCardVC.viewModel = viewModel
+            
+            // Here we are simulating the suffix of a deeplink url
             stayCardVC.deeplink = "key"
         }
         

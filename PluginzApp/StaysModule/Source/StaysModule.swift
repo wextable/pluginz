@@ -31,6 +31,7 @@ public class Segment: TilePluginSegment {
 }
 
 public class StaysModule: TilePluginModule {
+    // Even though the StaysModule framework (StayCardViewModel/Controller specifically) will consume TilePlugins, the StaysModule also provides plugins
     public static var tilePluginFactories: [TilePluginFactory.Type] = [HotelImagesPluginFactory.self]
     
     public static var delegate: StaysModuleDelegate?
@@ -41,5 +42,6 @@ public class StaysModule: TilePluginModule {
 }
 
 public protocol StaysModuleDelegate {
+    // This will register all relevant plugins app-wide for this stay
     func registerPlugins(forStay stay: TilePluginStay, updateBlock: @escaping TilePluginUpdateBlock)
 }
