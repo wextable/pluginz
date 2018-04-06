@@ -27,7 +27,7 @@ struct CollectionViewUpdater {
 
 protocol HHStayCardViewModelDelegate: class {
     
-    func didUpdateTiles(updater: CollectionViewUpdater?, newTiles: [TilePlugin])
+    func didUpdateTiles(updater: CollectionViewUpdater?, newTiles: [FullCardTile])
 }
 
 
@@ -35,9 +35,8 @@ public class StayCardViewModel {
     var stay: Stay
     var shouldAnimateCells = false
     weak var delegate: HHStayCardViewModelDelegate?
-    var tempTiles: [TilePlugin] = []
-    var tiles: [TilePlugin] = []
-    var wideness: [Bool] = []
+    var tempTiles: [FullCardTile] = []
+    var tiles: [FullCardTile] = []
     
     public init(stay: Stay) {
         self.stay = stay
@@ -68,7 +67,7 @@ public class StayCardViewModel {
         }
     }
     
-    func updateTiles(_ identifier: String?, plugin: TilePlugin?) {
+    func updateTiles(_ identifier: String, plugin: TilePlugin?) {
         guard let delegate = delegate else { return }
         
         var deletedIndices: [IndexPath] = []
@@ -76,18 +75,19 @@ public class StayCardViewModel {
         var updatedIndices: [IndexPath] = []
         
         if let plugin = plugin {
+            let tile = FullCardTile.init(plugin: plugin, identifier: identifier)
             if let index = tempTiles.index(where: { $0.identifier == identifier }) {
-                tempTiles[index] = plugin
+                tempTiles[index] = tile
                 updatedIndices = [IndexPath(item: index, section: 0)]
                 
             } else {
                 var index = tempTiles.count
-                for i in 0..<tempTiles.count where plugin.order < tempTiles[i].order {
+                for i in 0..<tempTiles.count where plugin.order < tempTiles[i].plugin.order {
                     index = i
                     break
                 }
                 insertedIndices = [IndexPath(item: index, section: 0)]
-                tempTiles.insert(plugin, at: index)
+                tempTiles.insert(tile, at: index)
             }
             
         } else if let index = tiles.index(where: { $0.identifier == identifier }) {
@@ -104,13 +104,13 @@ public class StayCardViewModel {
     
     public func layoutTiles() {
         tiles = tempTiles
-        wideness = tiles.wideness()
+        tiles.layout()
         delegate?.didUpdateTiles(updater: nil, newTiles: [])
     }
     
-    func updateDataSource(newTiles: [TilePlugin]) {
+    func updateDataSource(newTiles: [FullCardTile]) {
         tiles = newTiles
-        wideness = tiles.wideness()
+        tiles.layout()
     }
     
 }

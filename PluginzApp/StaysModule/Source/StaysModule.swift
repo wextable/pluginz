@@ -36,12 +36,12 @@ public class StaysModule: TilePluginModule {
     
     public static var delegate: StaysModuleDelegate?
     
-    static func registerPlugins(forStay stay: TilePluginStay, updateBlock: @escaping TilePluginUpdateBlock) {
+    static func registerPlugins(forStay stay: Stay, updateBlock: @escaping TilePluginUpdateBlock) {
         delegate?.registerPlugins(forStay: stay, updateBlock: updateBlock)
     }
 }
 
 public protocol StaysModuleDelegate {
     // This will register all relevant plugins app-wide for this stay
-    func registerPlugins(forStay stay: TilePluginStay, updateBlock: @escaping TilePluginUpdateBlock)
+    func registerPlugins(forStay stay: Stay, updateBlock: @escaping TilePluginUpdateBlock)
 }

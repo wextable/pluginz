@@ -11,10 +11,11 @@ import SharedLibrary
 
 struct HotelImagesPluginFactory: TilePluginFactory {
     static var identifier: String { return "HOTEL_IMAGES" }
+    static var order: Int = -1
     
     static func registerPlugin(forStay stay: TilePluginStay, updateBlock: @escaping TilePluginUpdateBlock) {
         // The only TilePlugin we deal with here is the hotel images plugin, and it applies to every stay, so we are ready to create it
-        let plugin = StaysPlugin.images(stay: stay, identifier: identifier, updateBlock: updateBlock)
+        let plugin = StaysPlugin.images(stay: stay, order: order, updateBlock: updateBlock)
         
         // Call the update block to update the UI
         updateBlock(identifier, plugin, nil)
@@ -24,12 +25,11 @@ struct HotelImagesPluginFactory: TilePluginFactory {
 
 enum StaysPlugin: TilePlugin {
     // only 1 case for StaysPlugin
-    case images(stay: TilePluginStay, identifier: String, updateBlock: TilePluginUpdateBlock)
+    case images(stay: TilePluginStay, order: Int, updateBlock: TilePluginUpdateBlock)
     
-    var identifier: String {
+    var order: Int {
         switch self {
-        case .images(_, let identifier, _):
-            return identifier
+        case .images(_, let order, _):  return order
         }
     }
     

@@ -11,6 +11,7 @@ import SharedLibrary
 
 struct CheckInPluginFactory: TilePluginFactory {
     static var identifier: String { return "CHECK_IN" }
+    static var order: Int = -1
     
     static func registerPlugin(forStay stay: TilePluginStay, updateBlock: @escaping TilePluginUpdateBlock) {
         
@@ -20,19 +21,18 @@ struct CheckInPluginFactory: TilePluginFactory {
             return
         }
         
-        let plugin = CheckInPlugin.checkIn(stay: stay, segment: segment, identifier: identifier, updateBlock: updateBlock)
+        let plugin = CheckInPlugin.checkIn(stay: stay, segment: segment, order: order, updateBlock: updateBlock)
         updateBlock(identifier, plugin, nil)
     }
     
 }
 
 enum CheckInPlugin: TilePlugin {
-    case checkIn(stay: TilePluginStay, segment: TilePluginSegment, identifier: String, updateBlock: TilePluginUpdateBlock)
+    case checkIn(stay: TilePluginStay, segment: TilePluginSegment, order: Int, updateBlock: TilePluginUpdateBlock)
     
-    var identifier: String {
+    var order: Int {
         switch self {
-        case .checkIn(_, _, let identifier, _):
-            return identifier
+        case .checkIn(_, _, let order, _):  return order
         }
     }
     

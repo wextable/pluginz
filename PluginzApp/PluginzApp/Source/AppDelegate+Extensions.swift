@@ -14,12 +14,17 @@ import DKModule
 
 extension AppDelegate: StaysModuleDelegate {
     
+    fileprivate var priority: [String] { return ["DKEY_PRIMARY", "DKEY_SECONDARY", "CHECK_IN", "HOTEL_IMAGES"] }
+    
     // Register all the modules that can provide tile plugins
     var tilePluginModules: [TilePluginModule.Type] { return [CheckInModule.self, DKeyModule.self, StaysModule.self] }
     
-    func registerPlugins(forStay stay: TilePluginStay, updateBlock: @escaping TilePluginUpdateBlock) {
-        tilePluginModules.forEach {
-            $0.registerPlugins(forStay: stay, updateBlock: updateBlock)
+    func registerPlugins(forStay stay: Stay, updateBlock: @escaping TilePluginUpdateBlock) {
+        tilePluginModules.forEach { module in
+            module.tilePluginFactories.forEach { factory in
+                factory.order = priority.index(where: { factory.identifier.hasPrefix($0) }) ?? -1
+                factory.registerPlugin(forStay: stay, updateBlock: updateBlock)
+            }
         }
     }
     

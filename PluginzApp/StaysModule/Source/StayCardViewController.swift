@@ -50,16 +50,16 @@ public class StayCardViewController: UICollectionViewController {
         guard let cell = cell as? StayCardCell else { return }
         
         let tile = viewModel.tiles[indexPath.item]
-        cell.titleLabel.text = tile.title
-        cell.backgroundImageView.image = tile.backgroundImage
-        cell.iconImageView.image = tile.icon
-        cell.iconImageView.tintColor = tile.iconTintColor
+        cell.titleLabel.text = tile.plugin.title
+        cell.backgroundImageView.image = tile.plugin.backgroundImage
+        cell.iconImageView.image = tile.plugin.icon
+        cell.iconImageView.tintColor = tile.plugin.iconTintColor
         cell.layer.cornerRadius = 4.0
     }
     
     public override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let tile = viewModel.tiles[indexPath.item]
-        tile.performAction(sender: self)
+        tile.plugin.performAction(sender: self)
     }
 
 }
@@ -69,8 +69,8 @@ extension StayCardViewController: UICollectionViewDelegateFlowLayout {
     
     public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
-        if viewModel.wideness.count > indexPath.item, viewModel.wideness[indexPath.item] == true {
-            return CGSize(width: 300, height: 130)
+        if viewModel.tiles[indexPath.item].isWide {
+            return CGSize(width: view.frame.size.width - 40, height: 130)
         }
         return CGSize(width: 150, height: 130)        
     }
@@ -92,7 +92,7 @@ extension StayCardViewController: UICollectionViewDelegateFlowLayout {
 
 extension StayCardViewController: HHStayCardViewModelDelegate {
     
-    func didUpdateTiles(updater: CollectionViewUpdater?, newTiles: [TilePlugin]) {
+    func didUpdateTiles(updater: CollectionViewUpdater?, newTiles: [FullCardTile]) {
         DispatchQueue.main.async {
             if let updater = updater {
                 self.collectionView?.performBatchUpdates({
@@ -122,10 +122,10 @@ extension StayCardViewController {
         defer { deeplink = nil }
         
         guard let deeplink = deeplink,
-            let tileForDeeplink = self.viewModel.tiles.first(where: { $0.routableDeeplinks.contains(deeplink) } ) else {
+            let tileForDeeplink = self.viewModel.tiles.first(where: { $0.plugin.routableDeeplinks.contains(deeplink) } ) else {
                 return
         }
         
-        tileForDeeplink.performDeepLinkAction(deeplink: deeplink, sender: self)
+        tileForDeeplink.plugin.performDeepLinkAction(deeplink: deeplink, sender: self)
     }
 }

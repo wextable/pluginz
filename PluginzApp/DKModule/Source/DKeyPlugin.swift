@@ -26,6 +26,7 @@ extension DKeyStay {
 
 struct DKeyPrimaryPluginFactory: TilePluginFactory {
     static var identifier: String { return "DKEY_PRIMARY" }
+    static var order: Int = -1
     
     static func registerPlugin(forStay stay: TilePluginStay, updateBlock: @escaping TilePluginUpdateBlock) {
         
@@ -37,17 +38,17 @@ struct DKeyPrimaryPluginFactory: TilePluginFactory {
         var plugin: DKeyPlugin?
         
         if dKeyStay.hasKey {
-            plugin = DKeyPlugin.liveKey(stay: dKeyStay, identifier: identifier, updateBlock: updateBlock)
+            plugin = DKeyPlugin.liveKey(stay: dKeyStay, order: order, updateBlock: updateBlock)
         } else if let keyStatus = dKeyStay.undeliveredKeyStatus {
             switch keyStatus {
             case .learnMore:
-                plugin = DKeyPlugin.learnMore(stay: dKeyStay, identifier: identifier, updateBlock: updateBlock)
+                plugin = DKeyPlugin.learnMore(stay: dKeyStay, order: order, updateBlock: updateBlock)
             case .requestKey:
                 if let segment = (dKeyStay.segments as? [DKeySegment])?.first(where: { $0.keyStatus == .requestKey }) {
-                    plugin = DKeyPlugin.requestKey(stay: dKeyStay, segment: segment, identifier: identifier, updateBlock: updateBlock)
+                    plugin = DKeyPlugin.requestKey(stay: dKeyStay, segment: segment, order: order, updateBlock: updateBlock)
                 }
             case .requested:
-                plugin = DKeyPlugin.requested(stay: dKeyStay, identifier: identifier, updateBlock: updateBlock)
+                plugin = DKeyPlugin.requested(stay: dKeyStay, order: order, updateBlock: updateBlock)
             default:
                 break
             }
@@ -60,6 +61,7 @@ struct DKeyPrimaryPluginFactory: TilePluginFactory {
 
 struct DKeySecondaryPluginFactory: TilePluginFactory {
     static var identifier: String { return "DKEY_SECONDARY" }
+    static var order: Int = -1
     
     static func registerPlugin(forStay stay: TilePluginStay, updateBlock: @escaping TilePluginUpdateBlock) {
         
@@ -75,10 +77,10 @@ struct DKeySecondaryPluginFactory: TilePluginFactory {
             switch keyStatus {            
             case .requestKey:
                 if let segment = (dKeyStay.segments as? [DKeySegment])?.first(where: { $0.keyStatus == .requestKey }) {
-                    plugin = DKeyPlugin.requestKey(stay: dKeyStay, segment: segment, identifier: identifier, updateBlock: updateBlock)
+                    plugin = DKeyPlugin.requestKey(stay: dKeyStay, segment: segment, order: order, updateBlock: updateBlock)
                 }
             case .requested:
-                plugin = DKeyPlugin.requested(stay: dKeyStay, identifier: identifier, updateBlock: updateBlock)
+                plugin = DKeyPlugin.requested(stay: dKeyStay, order: order, updateBlock: updateBlock)
             default:
                 break
             }
@@ -90,17 +92,17 @@ struct DKeySecondaryPluginFactory: TilePluginFactory {
 }
 
 enum DKeyPlugin: TilePlugin {
-    case learnMore(stay: DKeyStay, identifier: String, updateBlock: TilePluginUpdateBlock)
-    case requestKey(stay: DKeyStay, segment: DKeySegment, identifier: String, updateBlock: TilePluginUpdateBlock)
-    case requested(stay: DKeyStay, identifier: String, updateBlock: TilePluginUpdateBlock)
-    case liveKey(stay: DKeyStay, identifier: String, updateBlock: TilePluginUpdateBlock)
+    case learnMore(stay: DKeyStay, order: Int, updateBlock: TilePluginUpdateBlock)
+    case requestKey(stay: DKeyStay, segment: DKeySegment, order: Int, updateBlock: TilePluginUpdateBlock)
+    case requested(stay: DKeyStay, order: Int, updateBlock: TilePluginUpdateBlock)
+    case liveKey(stay: DKeyStay, order: Int, updateBlock: TilePluginUpdateBlock)
     
-    var identifier: String {
+    var order: Int {
         switch self {
-        case .learnMore(_, let identifier, _): return identifier
-        case .requestKey(_, _, let identifier, _): return identifier
-        case .requested(_, let identifier, _): return identifier
-        case .liveKey(_, let identifier, _): return identifier
+        case .learnMore(_, let order, _):       return order
+        case .requestKey(_, _, let order, _):   return order
+        case .requested(_, let order, _):       return order
+        case .liveKey(_, let order, _):         return order
         }
     }
     

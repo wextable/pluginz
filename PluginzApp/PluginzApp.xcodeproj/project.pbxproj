@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		5A76AAB7207438C30021212F /* Stays.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5A76AAB6207438C30021212F /* Stays.storyboard */; };
-		5A76AAB92074420B0021212F /* TilePlugin+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A76AAB82074420B0021212F /* TilePlugin+Extensions.swift */; };
+		5A76AAB92074420B0021212F /* FullCardTile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A76AAB82074420B0021212F /* FullCardTile.swift */; };
 		6564D793206D929300CABE13 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6564D791206D929300CABE13 /* Main.storyboard */; };
 		6564D795206D929300CABE13 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6564D794206D929300CABE13 /* Assets.xcassets */; };
 		6564D798206D929300CABE13 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6564D796206D929300CABE13 /* LaunchScreen.storyboard */; };
@@ -96,7 +96,7 @@
 
 /* Begin PBXFileReference section */
 		5A76AAB6207438C30021212F /* Stays.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Stays.storyboard; sourceTree = "<group>"; };
-		5A76AAB82074420B0021212F /* TilePlugin+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TilePlugin+Extensions.swift"; sourceTree = "<group>"; };
+		5A76AAB82074420B0021212F /* FullCardTile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullCardTile.swift; sourceTree = "<group>"; };
 		6564D78A206D929300CABE13 /* PluginzApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PluginzApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6564D792206D929300CABE13 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		6564D794206D929300CABE13 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -286,7 +286,7 @@
 				65B233CD2075A7EE00201A07 /* StaysPlugin.swift */,
 				65D897D1206D95AA00F3092A /* StayCardViewController.swift */,
 				65D897D3206D95BB00F3092A /* StayCardViewModel.swift */,
-				5A76AAB82074420B0021212F /* TilePlugin+Extensions.swift */,
+				5A76AAB82074420B0021212F /* FullCardTile.swift */,
 				65B233CF2075A8E900201A07 /* ImageViewController.swift */,
 			);
 			path = Source;
@@ -575,7 +575,7 @@
 			files = (
 				65D897CC206D954800F3092A /* StaysModule.swift in Sources */,
 				65D897D4206D95BB00F3092A /* StayCardViewModel.swift in Sources */,
-				5A76AAB92074420B0021212F /* TilePlugin+Extensions.swift in Sources */,
+				5A76AAB92074420B0021212F /* FullCardTile.swift in Sources */,
 				65B233CE2075A7EE00201A07 /* StaysPlugin.swift in Sources */,
 				65B233D02075A8E900201A07 /* ImageViewController.swift in Sources */,
 				65D897D2206D95AA00F3092A /* StayCardViewController.swift in Sources */,
