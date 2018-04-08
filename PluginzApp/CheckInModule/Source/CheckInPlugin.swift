@@ -9,11 +9,10 @@
 import Foundation
 import SharedLibrary
 
-struct CheckInPluginFactory: TilePluginFactory {
+struct CheckInPluginFactory: TilePlugin {
     static var identifier: String { return "CHECK_IN" }
-    static var order: Int = -1
     
-    static func registerPlugin(forStay stay: TilePluginStay, updateBlock: @escaping TilePluginUpdateBlock) {
+    static func fetchTile(forStay stay: TilePluginStay, updateBlock: @escaping TilePluginUpdateBlock) {
         
         guard let segments = stay.segments as? [CheckInSegment],
             let segment = segments.first(where: { $0.checkInAvailable }) else {
@@ -21,20 +20,14 @@ struct CheckInPluginFactory: TilePluginFactory {
             return
         }
         
-        let plugin = CheckInPlugin.checkIn(stay: stay, segment: segment, order: order, updateBlock: updateBlock)
+        let plugin = CheckInPlugin.checkIn(stay: stay, segment: segment, updateBlock: updateBlock)
         updateBlock(identifier, plugin, nil)
     }
     
 }
 
-enum CheckInPlugin: TilePlugin {
-    case checkIn(stay: TilePluginStay, segment: TilePluginSegment, order: Int, updateBlock: TilePluginUpdateBlock)
-    
-    var order: Int {
-        switch self {
-        case .checkIn(_, _, let order, _):  return order
-        }
-    }
+enum CheckInPlugin: PluginTile {
+    case checkIn(stay: TilePluginStay, segment: TilePluginSegment, updateBlock: TilePluginUpdateBlock)
     
     var accessibilityId: String { return "UIA_CheckInTile" }
     
@@ -47,7 +40,7 @@ enum CheckInPlugin: TilePlugin {
     func performAction(sender: UIViewController?) {
         
         switch self {
-        case .checkIn(let stay, let segment, _, let updateBlock):
+        case .checkIn(let stay, let segment, let updateBlock):
             
             guard let vc = sender else { return }
             let checkInVC = CheckInViewController()

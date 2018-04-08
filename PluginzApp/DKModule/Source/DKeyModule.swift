@@ -32,7 +32,7 @@ public protocol DKeySegment:TilePluginSegment {
 }
 
 public class DKeyModule: TilePluginModule {
-    public static var tilePluginFactories: [TilePluginFactory.Type] = [DKeyPrimaryPluginFactory.self, DKeySecondaryPluginFactory.self]
+    public static var tilePlugins: [TilePlugin.Type] = [DKeyPrimaryPlugin.self, DKeySecondaryPlugin.self]
     
     public static var delegate: DKeyModuleDelegate?
     

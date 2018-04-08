@@ -42,15 +42,15 @@ public class StayCardViewModel {
         self.stay = stay
     }
     
-    func registerPlugins() {
-        // Disable batch update when we call registerPlugins
+    func fetchTiles() {
+        // Disable batch update when we call fetchTiles
         shouldAnimateCells = false
         
-        StaysModule.registerPlugins(forStay: stay) { [weak self] (identifier, plugin, completion) in
+        StaysModule.fetchTiles(forStay: stay) { [weak self] (identifier, pluginTile, completion) in
             
             // The update block is the same for every plugin
             // We update our data source and refresh the UI
-            self?.updateTiles(identifier, plugin: plugin)
+            self?.updateTiles(identifier, pluginTile: pluginTile)
             
             // And call completion
             if let viewController = self?.delegate as? UIViewController {
@@ -67,22 +67,22 @@ public class StayCardViewModel {
         }
     }
     
-    func updateTiles(_ identifier: String, plugin: TilePlugin?) {
+    func updateTiles(_ identifier: String, pluginTile: PluginTile?) {
         guard let delegate = delegate else { return }
         
         var deletedIndices: [IndexPath] = []
         var insertedIndices: [IndexPath] = []
         var updatedIndices: [IndexPath] = []
         
-        if let plugin = plugin {
-            let tile = FullCardTile.init(plugin: plugin, identifier: identifier)
+        if let pluginTile = pluginTile {
+            let tile = FullCardTile.init(pluginTile: pluginTile, identifier: identifier)
             if let index = tempTiles.index(where: { $0.identifier == identifier }) {
                 tempTiles[index] = tile
                 updatedIndices = [IndexPath(item: index, section: 0)]
                 
             } else {
                 var index = tempTiles.count
-                for i in 0..<tempTiles.count where plugin.order < tempTiles[i].plugin.order {
+                for i in 0..<tempTiles.count where tile.order < tempTiles[i].order {
                     index = i
                     break
                 }

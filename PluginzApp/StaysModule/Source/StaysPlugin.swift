@@ -9,13 +9,12 @@
 import Foundation
 import SharedLibrary
 
-struct HotelImagesPluginFactory: TilePluginFactory {
+struct HotelImagesPluginFactory: TilePlugin {
     static var identifier: String { return "HOTEL_IMAGES" }
-    static var order: Int = -1
     
-    static func registerPlugin(forStay stay: TilePluginStay, updateBlock: @escaping TilePluginUpdateBlock) {
+    static func fetchTile(forStay stay: TilePluginStay, updateBlock: @escaping TilePluginUpdateBlock) {
         // The only TilePlugin we deal with here is the hotel images plugin, and it applies to every stay, so we are ready to create it
-        let plugin = StaysPlugin.images(stay: stay, order: order, updateBlock: updateBlock)
+        let plugin = StaysPlugin.images(stay: stay, updateBlock: updateBlock)
         
         // Call the update block to update the UI
         updateBlock(identifier, plugin, nil)
@@ -23,15 +22,9 @@ struct HotelImagesPluginFactory: TilePluginFactory {
     
 }
 
-enum StaysPlugin: TilePlugin {
+enum StaysPlugin: PluginTile {
     // only 1 case for StaysPlugin
-    case images(stay: TilePluginStay, order: Int, updateBlock: TilePluginUpdateBlock)
-    
-    var order: Int {
-        switch self {
-        case .images(_, let order, _):  return order
-        }
-    }
+    case images(stay: TilePluginStay, updateBlock: TilePluginUpdateBlock)
     
     var title: String? { return "Hotel Images" }
     
@@ -39,7 +32,7 @@ enum StaysPlugin: TilePlugin {
     
     var backgroundImage: UIImage? {
         switch self {
-        case .images(let stay, _, _):
+        case .images(let stay, _):
             if let stay = stay as? Stay {
                 return UIImage(named: stay.hotelImageName)
             }
@@ -52,7 +45,7 @@ enum StaysPlugin: TilePlugin {
     func performAction(sender: UIViewController?) {
         
         switch self {
-        case .images(let stay, _, _):
+        case .images(let stay, _):
             // Launch a VC with a full screen image of the hotel
             guard let vc = sender,
                 let stay = stay as? Stay else { return }

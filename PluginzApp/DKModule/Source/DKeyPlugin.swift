@@ -24,46 +24,44 @@ extension DKeyStay {
     }
 }
 
-struct DKeyPrimaryPluginFactory: TilePluginFactory {
+struct DKeyPrimaryPlugin: TilePlugin {
     static var identifier: String { return "DKEY_PRIMARY" }
-    static var order: Int = -1
     
-    static func registerPlugin(forStay stay: TilePluginStay, updateBlock: @escaping TilePluginUpdateBlock) {
+    static func fetchTile(forStay stay: TilePluginStay, updateBlock: @escaping TilePluginUpdateBlock) {
         
         guard let dKeyStay = stay as? DKeyStay else {
             updateBlock(identifier, nil, nil)
             return
         }
         
-        var plugin: DKeyPlugin?
+        var tile: DKeyPluginTile?
         
         if dKeyStay.hasKey {
-            plugin = DKeyPlugin.liveKey(stay: dKeyStay, order: order, updateBlock: updateBlock)
+            tile = DKeyPluginTile.liveKey(stay: dKeyStay, updateBlock: updateBlock)
         } else if let keyStatus = dKeyStay.undeliveredKeyStatus {
             switch keyStatus {
             case .learnMore:
-                plugin = DKeyPlugin.learnMore(stay: dKeyStay, order: order, updateBlock: updateBlock)
+                tile = DKeyPluginTile.learnMore(stay: dKeyStay, updateBlock: updateBlock)
             case .requestKey:
                 if let segment = (dKeyStay.segments as? [DKeySegment])?.first(where: { $0.keyStatus == .requestKey }) {
-                    plugin = DKeyPlugin.requestKey(stay: dKeyStay, segment: segment, order: order, updateBlock: updateBlock)
+                    tile = DKeyPluginTile.requestKey(stay: dKeyStay, segment: segment, updateBlock: updateBlock)
                 }
             case .requested:
-                plugin = DKeyPlugin.requested(stay: dKeyStay, order: order, updateBlock: updateBlock)
+                tile = DKeyPluginTile.requested(stay: dKeyStay, updateBlock: updateBlock)
             default:
                 break
             }
         }
 
-        updateBlock(identifier, plugin, nil)
+        updateBlock(identifier, tile, nil)
     }
     
 }
 
-struct DKeySecondaryPluginFactory: TilePluginFactory {
+struct DKeySecondaryPlugin: TilePlugin {
     static var identifier: String { return "DKEY_SECONDARY" }
-    static var order: Int = -1
     
-    static func registerPlugin(forStay stay: TilePluginStay, updateBlock: @escaping TilePluginUpdateBlock) {
+    static func fetchTile(forStay stay: TilePluginStay, updateBlock: @escaping TilePluginUpdateBlock) {
         
         guard let dKeyStay = stay as? DKeyStay,
             dKeyStay.hasKey else {
@@ -71,40 +69,31 @@ struct DKeySecondaryPluginFactory: TilePluginFactory {
             return
         }
         
-        var plugin: DKeyPlugin?
+        var tile: DKeyPluginTile?
         
          if let keyStatus = dKeyStay.undeliveredKeyStatus {
             switch keyStatus {            
             case .requestKey:
                 if let segment = (dKeyStay.segments as? [DKeySegment])?.first(where: { $0.keyStatus == .requestKey }) {
-                    plugin = DKeyPlugin.requestKey(stay: dKeyStay, segment: segment, order: order, updateBlock: updateBlock)
+                    tile = DKeyPluginTile.requestKey(stay: dKeyStay, segment: segment, updateBlock: updateBlock)
                 }
             case .requested:
-                plugin = DKeyPlugin.requested(stay: dKeyStay, order: order, updateBlock: updateBlock)
+                tile = DKeyPluginTile.requested(stay: dKeyStay, updateBlock: updateBlock)
             default:
                 break
             }
         }
         
-        updateBlock(identifier, plugin, nil)
+        updateBlock(identifier, tile, nil)
     }
     
 }
 
-enum DKeyPlugin: TilePlugin {
-    case learnMore(stay: DKeyStay, order: Int, updateBlock: TilePluginUpdateBlock)
-    case requestKey(stay: DKeyStay, segment: DKeySegment, order: Int, updateBlock: TilePluginUpdateBlock)
-    case requested(stay: DKeyStay, order: Int, updateBlock: TilePluginUpdateBlock)
-    case liveKey(stay: DKeyStay, order: Int, updateBlock: TilePluginUpdateBlock)
-    
-    var order: Int {
-        switch self {
-        case .learnMore(_, let order, _):       return order
-        case .requestKey(_, _, let order, _):   return order
-        case .requested(_, let order, _):       return order
-        case .liveKey(_, let order, _):         return order
-        }
-    }
+enum DKeyPluginTile: PluginTile {
+    case learnMore(stay: DKeyStay, updateBlock: TilePluginUpdateBlock)
+    case requestKey(stay: DKeyStay, segment: DKeySegment, updateBlock: TilePluginUpdateBlock)
+    case requested(stay: DKeyStay, updateBlock: TilePluginUpdateBlock)
+    case liveKey(stay: DKeyStay, updateBlock: TilePluginUpdateBlock)
     
     var accessibilityId: String {
         switch self {
@@ -185,7 +174,7 @@ enum DKeyPlugin: TilePlugin {
             dKeyVC.text = "Learn how to use a digital key!"
             vc.present(dKeyVC, animated: true, completion: nil)
             
-        case .requestKey(let stay, let segment, _, let updateBlock):
+        case .requestKey(let stay, let segment, let updateBlock):
             let dKeyVC = DKeyViewController()
             dKeyVC.text = "You can request a key now for room \(segment.segmentNumber)"
             dKeyVC.buttonText = "Request Key"
@@ -202,7 +191,7 @@ enum DKeyPlugin: TilePlugin {
         case .requested:
             break
             
-        case .liveKey(let stay, _, _):
+        case .liveKey(let stay, _):
             let keyCardVC = DKeyLiveKeyViewController()
             if let dKeySegments = stay.segments as? [DKeySegment] {
                 let roomNames: [String] = dKeySegments.filter { $0.keyStatus == .delivered }

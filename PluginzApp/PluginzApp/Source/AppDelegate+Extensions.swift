@@ -19,13 +19,14 @@ extension AppDelegate: StaysModuleDelegate {
     // Register all the modules that can provide tile plugins
     var tilePluginModules: [TilePluginModule.Type] { return [CheckInModule.self, DKeyModule.self, StaysModule.self] }
     
-    func registerPlugins(forStay stay: Stay, updateBlock: @escaping TilePluginUpdateBlock) {
+    func fetchTiles(forStay stay: Stay, updateBlock: @escaping TilePluginUpdateBlock) {
         tilePluginModules.forEach { module in
-            module.tilePluginFactories.forEach { factory in
-                factory.order = priority.index(where: { factory.identifier.hasPrefix($0) }) ?? -1
-                factory.registerPlugin(forStay: stay, updateBlock: updateBlock)
-            }
+            module.fetchTiles(forStay: stay, updateBlock: updateBlock)
         }
+    }
+    
+    public func tileOrder(forIdentifier identifier: String) -> Int? {
+        return priority.index(where: { identifier.hasPrefix($0) })
     }
     
 }
@@ -38,14 +39,14 @@ extension AppDelegate: CheckInModuleDelegate {
             segment.checkInAvailable = false
         }
         // And tell the CheckInModule to refresh its tile plugins for this stay
-        CheckInModule.registerPlugins(forStay: stay, updateBlock: updateBlock)
+        CheckInModule.fetchTiles(forStay: stay, updateBlock: updateBlock)
         
         // Update the stay key status to make it available for requesting a key (if DKey is supported)
         if let stay = stay as? DKeyStay, var dkeySegment = segment as? DKeySegment, stay.dKeySupported {
             dkeySegment.keyStatus = .requestKey
         }
         // And tell the DKeyModule to refresh its tile plugins for this stay
-        DKeyModule.registerPlugins(forStay: stay, updateBlock: updateBlock)
+        DKeyModule.fetchTiles(forStay: stay, updateBlock: updateBlock)
     }
 
 }
@@ -59,7 +60,7 @@ extension AppDelegate: DKeyModuleDelegate {
         dkeySegment.keyStatus = .requested
         
         // And tell the DKeyModule to refresh its tile plugins for this stay
-        DKeyModule.registerPlugins(forStay: stay, updateBlock: updateBlock)
+        DKeyModule.fetchTiles(forStay: stay, updateBlock: updateBlock)
     }
     
     func keyDelivered(stay: DKeyStay, segment: DKeySegment, updateBlock: @escaping TilePluginUpdateBlock) {
@@ -69,7 +70,7 @@ extension AppDelegate: DKeyModuleDelegate {
         dkeySegment.keyStatus = .delivered
         
         // And tell the DKeyModule to refresh its tile plugins for this stay
-        DKeyModule.registerPlugins(forStay: stay, updateBlock: updateBlock)
+        DKeyModule.fetchTiles(forStay: stay, updateBlock: updateBlock)
     }
     
 }

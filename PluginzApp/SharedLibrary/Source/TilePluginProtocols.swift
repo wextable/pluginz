@@ -19,24 +19,22 @@ public protocol TilePluginSegment {
     var segmentNumber: String  { get }
 }
 
-public typealias TilePluginUpdateBlock = (_ identifier: String, _ Plugin: TilePlugin?, _ completion: TilePluginUpdateBlockCompletion?) -> Void
+public typealias TilePluginUpdateBlock = (_ identifier: String, _ Plugin: PluginTile?, _ completion: TilePluginUpdateBlockCompletion?) -> Void
 /// hostViewController is the view controller hosts the plugin which will be the full card view controller in StaysModule
 public typealias TilePluginUpdateBlockCompletion = (_ hostViewController: UIViewController?) -> Void
 
 
-public protocol TilePluginFactory {
+public protocol TilePlugin {
     
     /// This is coming from global prefs and should be unique per plugin
     static var identifier: String   { get }
-    static var order:      Int      { get set }
     
-    static func registerPlugin(forStay stay: TilePluginStay, updateBlock: @escaping TilePluginUpdateBlock)
+    static func fetchTile(forStay stay: TilePluginStay, updateBlock: @escaping TilePluginUpdateBlock)
 }
 
 
-public protocol TilePlugin  {
+public protocol PluginTile  {
     
-    var order:              Int         { get }
     var accessibilityId:    String      { get }
     var title:              String?     { get }
     var titleColor:         UIColor?    { get }
@@ -53,7 +51,7 @@ public protocol TilePlugin  {
 }
 
 
-public extension TilePlugin {
+public extension PluginTile {
     var title:              String?     { return nil }
     var titleColor:         UIColor?    { return .black }
     var icon:               UIImage?    { return nil }
@@ -72,13 +70,13 @@ public extension TilePlugin {
 
 public protocol TilePluginModule {
     
-    static var tilePluginFactories: [TilePluginFactory.Type] { get }
+    static var tilePlugins: [TilePlugin.Type] { get }
     
 }
 public extension TilePluginModule {
     
-    static func registerPlugins(forStay stay: TilePluginStay, updateBlock: @escaping TilePluginUpdateBlock) {
-        tilePluginFactories.forEach { $0.registerPlugin(forStay: stay, updateBlock: updateBlock) }
+    static func fetchTiles(forStay stay: TilePluginStay, updateBlock: @escaping TilePluginUpdateBlock) {
+        tilePlugins.forEach { $0.fetchTile(forStay: stay, updateBlock: updateBlock) }
     }
     
 }
