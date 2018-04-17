@@ -15,8 +15,9 @@ public protocol CheckInSegment: TilePluginSegment {
 
 
 public class CheckInModule: TilePluginModule {
+    
     // Check in Module provides one type of TilePluginFactory
-    public static var tilePlugins: [TilePlugin.Type] = [CheckInPluginFactory.self]
+    public static var tilePlugins: [TilePlugin.Type] = [CheckInTilePlugin.self]
     
     public static var delegate: CheckInModuleDelegate?
     

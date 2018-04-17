@@ -1,5 +1,5 @@
 //
-//  CheckInPluginFactory.swift
+//  CheckInTilePlugin.swift
 //  CheckInModule
 //
 //  Created by Wesley St. John on 3/29/18.
@@ -9,7 +9,7 @@
 import Foundation
 import SharedLibrary
 
-struct CheckInPluginFactory: TilePlugin {
+struct CheckInTilePlugin: TilePlugin {
     static var identifier: String { return "CHECK_IN" }
     
     static func fetchTile(forStay stay: TilePluginStay, updateBlock: @escaping TilePluginUpdateBlock) {

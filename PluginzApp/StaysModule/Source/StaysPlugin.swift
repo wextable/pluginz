@@ -9,7 +9,7 @@
 import Foundation
 import SharedLibrary
 
-struct HotelImagesPluginFactory: TilePlugin {
+struct HotelImagesTilePlugin: TilePlugin {
     static var identifier: String { return "HOTEL_IMAGES" }
     
     static func fetchTile(forStay stay: TilePluginStay, updateBlock: @escaping TilePluginUpdateBlock) {

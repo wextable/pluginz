@@ -31,8 +31,9 @@ public class Segment: TilePluginSegment {
 }
 
 public class StaysModule: TilePluginModule {
+    
     // Even though the StaysModule framework (StayCardViewModel/Controller specifically) will consume TilePlugins, the StaysModule also provides plugins
-    public static var tilePlugins: [TilePlugin.Type] = [HotelImagesPluginFactory.self]
+    public static var tilePlugins: [TilePlugin.Type] = [HotelImagesTilePlugin.self]
     
     public static var delegate: StaysModuleDelegate?
     
