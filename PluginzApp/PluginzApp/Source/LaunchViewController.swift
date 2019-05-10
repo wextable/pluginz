@@ -7,6 +7,10 @@
 //
 
 import UIKit
+import SharedLibrary
+import StaysModule
+import CheckInModule
+import DKModule
 
 class LaunchViewController: UIViewController {
 
@@ -15,21 +19,59 @@ class LaunchViewController: UIViewController {
 
         // Do any additional setup after loading the view.
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+        
+        guard let stayCardVC = segue.destination as? StayCardViewController,
+            let button = sender as? UIButton else { return }
+        
+        if button.title(for: .normal) == "Stay 1" {
+            // Stay 1 has 2 segments, both ready for check in
+            
+            let stay = Stay()
+            stay.confirmationNumber = "12345678"
+            stay.ctyhocn = "DCAOTHF"
+            stay.dKeySupported = true
+            stay.hotelImageName = "hotel"
+            
+            let primarySegment = Segment()
+            primarySegment.checkInAvailable = true
+            primarySegment.keyStatusString = "learnMore"
+            primarySegment.segmentNumber = "1"
+            
+            let secondarySegment = Segment()
+            secondarySegment.checkInAvailable = true
+            secondarySegment.keyStatusString = "learnMore"
+            secondarySegment.segmentNumber = "2"
+            
+            stay.segments = [primarySegment, secondarySegment]
+            
+            let viewModel = StayCardViewModel(stay: stay)
+            stayCardVC.viewModel = viewModel
+            
+        } else {
+            // Stay 2 has 1 segment, already with a digital key
+            let stay = Stay()
+            stay.confirmationNumber = "87654321"
+            stay.ctyhocn = "DCAOTHF"
+            stay.dKeySupported = true
+            stay.hotelImageName = "hotel"
+            
+            let primarySegment = Segment()
+            primarySegment.checkInAvailable = false
+            primarySegment.keyStatusString = "delivered"
+            primarySegment.segmentNumber = "1"
+            
+            stay.segments = [primarySegment]
+            
+            let viewModel = StayCardViewModel(stay: stay)
+            stayCardVC.viewModel = viewModel
+            
+            // Here we are simulating the suffix of a deeplink url
+            stayCardVC.deeplink = "key"
+        }
+        
+        
     }
-    */
 
 }

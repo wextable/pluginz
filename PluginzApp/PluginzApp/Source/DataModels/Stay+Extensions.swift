@@ -12,16 +12,21 @@ import CheckInModule
 import DKModule
 
 
-extension Stay: CheckInStay, DKeyStay {
-    public var keyStatus: DKeyStatus {
+extension Stay: DKeyStay {}
+
+extension Segment: CheckInSegment, DKeySegment {
+    
+    public var keyStatus: DKeyStatus? {
         get {
             guard let status = DKeyStatus.init(rawValue: keyStatusString) else {
-                return .notSupported
+                return nil
             }
             return status
         }
         set(newValue) {
-            keyStatusString = newValue.rawValue
+            if let value = newValue?.rawValue {
+                keyStatusString = value
+            }
         }
     }
     

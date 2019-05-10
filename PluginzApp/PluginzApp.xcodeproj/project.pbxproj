@@ -7,10 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5A76AAB7207438C30021212F /* Stays.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5A76AAB6207438C30021212F /* Stays.storyboard */; };
+		5A76AAB92074420B0021212F /* FullCardTile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A76AAB82074420B0021212F /* FullCardTile.swift */; };
 		6564D793206D929300CABE13 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6564D791206D929300CABE13 /* Main.storyboard */; };
 		6564D795206D929300CABE13 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6564D794206D929300CABE13 /* Assets.xcassets */; };
 		6564D798206D929300CABE13 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6564D796206D929300CABE13 /* LaunchScreen.storyboard */; };
 		65ADE90B206DC226004CA884 /* DKeyPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65ADE90A206DC226004CA884 /* DKeyPlugin.swift */; };
+		65B233CE2075A7EE00201A07 /* StaysPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B233CD2075A7EE00201A07 /* StaysPlugin.swift */; };
+		65B233D02075A8E900201A07 /* ImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B233CF2075A8E900201A07 /* ImageViewController.swift */; };
 		65C9321820743045005F338B /* DKeyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65C9321720743045005F338B /* DKeyViewController.swift */; };
 		65C9321A20743428005F338B /* DKeyLiveKeyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65C9321920743428005F338B /* DKeyLiveKeyViewController.swift */; };
 		65C9321C20743C45005F338B /* LaunchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65C9321B20743C45005F338B /* LaunchViewController.swift */; };
@@ -91,12 +95,16 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		5A76AAB6207438C30021212F /* Stays.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Stays.storyboard; sourceTree = "<group>"; };
+		5A76AAB82074420B0021212F /* FullCardTile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullCardTile.swift; sourceTree = "<group>"; };
 		6564D78A206D929300CABE13 /* PluginzApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PluginzApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6564D792206D929300CABE13 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		6564D794206D929300CABE13 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		6564D797206D929300CABE13 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		6564D799206D929300CABE13 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		65ADE90A206DC226004CA884 /* DKeyPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DKeyPlugin.swift; sourceTree = "<group>"; };
+		65B233CD2075A7EE00201A07 /* StaysPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaysPlugin.swift; sourceTree = "<group>"; };
+		65B233CF2075A8E900201A07 /* ImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageViewController.swift; sourceTree = "<group>"; };
 		65C9321720743045005F338B /* DKeyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DKeyViewController.swift; sourceTree = "<group>"; };
 		65C9321920743428005F338B /* DKeyLiveKeyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DKeyLiveKeyViewController.swift; sourceTree = "<group>"; };
 		65C9321B20743C45005F338B /* LaunchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchViewController.swift; sourceTree = "<group>"; };
@@ -225,6 +233,7 @@
 				65D89783206D93E200F3092A /* StaysModule.h */,
 				65D897B2206D945000F3092A /* Source */,
 				65D89784206D93E200F3092A /* Info.plist */,
+				5A76AAB6207438C30021212F /* Stays.storyboard */,
 			);
 			path = StaysModule;
 			sourceTree = "<group>";
@@ -274,8 +283,11 @@
 			isa = PBXGroup;
 			children = (
 				65D897CB206D954800F3092A /* StaysModule.swift */,
+				65B233CD2075A7EE00201A07 /* StaysPlugin.swift */,
 				65D897D1206D95AA00F3092A /* StayCardViewController.swift */,
 				65D897D3206D95BB00F3092A /* StayCardViewModel.swift */,
+				5A76AAB82074420B0021212F /* FullCardTile.swift */,
+				65B233CF2075A8E900201A07 /* ImageViewController.swift */,
 			);
 			path = Source;
 			sourceTree = "<group>";
@@ -518,6 +530,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5A76AAB7207438C30021212F /* Stays.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -562,6 +575,9 @@
 			files = (
 				65D897CC206D954800F3092A /* StaysModule.swift in Sources */,
 				65D897D4206D95BB00F3092A /* StayCardViewModel.swift in Sources */,
+				5A76AAB92074420B0021212F /* FullCardTile.swift in Sources */,
+				65B233CE2075A7EE00201A07 /* StaysPlugin.swift in Sources */,
+				65B233D02075A8E900201A07 /* ImageViewController.swift in Sources */,
 				65D897D2206D95AA00F3092A /* StayCardViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

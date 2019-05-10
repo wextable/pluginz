@@ -9,23 +9,24 @@
 import Foundation
 import SharedLibrary
 
-
-public protocol CheckInStay: TilePluginStay {
+public protocol CheckInSegment: TilePluginSegment {
     var checkInAvailable: Bool { get set }
 }
 
 
 public class CheckInModule: TilePluginModule {
-    public static var tilePluginFactories: [TilePluginFactory.Type] = [CheckInPluginFactory.self]
+    
+    // Check in Module provides one type of TilePluginFactory
+    public static var tilePlugins: [TilePlugin.Type] = [CheckInTilePlugin.self]
     
     public static var delegate: CheckInModuleDelegate?
     
-    public static func checkInCompleted(stay: CheckInStay, updateBlock: @escaping TilePluginUpdateBlock) {
-        delegate?.checkInCompleted(stay: stay, updateBlock: updateBlock)
+    public static func checkInCompleted(stay: TilePluginStay, segment: TilePluginSegment, updateBlock: @escaping TilePluginUpdateBlock) {
+        delegate?.checkInCompleted(stay: stay, segment: segment, updateBlock: updateBlock)
     }
     
 }
 
 public protocol CheckInModuleDelegate {
-    func checkInCompleted(stay: CheckInStay, updateBlock: @escaping TilePluginUpdateBlock)
+    func checkInCompleted(stay: TilePluginStay, segment: TilePluginSegment, updateBlock: @escaping TilePluginUpdateBlock)
 }

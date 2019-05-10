@@ -1,5 +1,5 @@
 //
-//  CheckInPluginFactory.swift
+//  CheckInTilePlugin.swift
 //  CheckInModule
 //
 //  Created by Wesley St. John on 3/29/18.
@@ -9,32 +9,25 @@
 import Foundation
 import SharedLibrary
 
-struct CheckInPluginFactory: TilePluginFactory {
+struct CheckInTilePlugin: TilePlugin {
     static var identifier: String { return "CHECK_IN" }
     
-    static func registerPlugin(forStay stay: TilePluginStay, updateBlock: @escaping TilePluginUpdateBlock) {
+    static func fetchTile(forStay stay: TilePluginStay, updateBlock: @escaping TilePluginUpdateBlock) {
         
-        guard let checkInStay = stay as? CheckInStay,
-            checkInStay.checkInAvailable else {
+        guard let segments = stay.segments as? [CheckInSegment],
+            let segment = segments.first(where: { $0.checkInAvailable }) else {
             updateBlock(identifier, nil, nil)
             return
         }
         
-        let plugin = CheckInPlugin.checkIn(stay: checkInStay, identifier: identifier, updateBlock: updateBlock)
+        let plugin = CheckInPlugin.checkIn(stay: stay, segment: segment, updateBlock: updateBlock)
         updateBlock(identifier, plugin, nil)
     }
     
 }
 
-enum CheckInPlugin: TilePlugin {
-    case checkIn(stay: CheckInStay, identifier: String, updateBlock: TilePluginUpdateBlock)
-    
-    var identifier: String {
-        switch self {
-        case .checkIn(_, let identifier, _):
-            return identifier
-        }
-    }
+enum CheckInPlugin: PluginTile {
+    case checkIn(stay: TilePluginStay, segment: TilePluginSegment, updateBlock: TilePluginUpdateBlock)
     
     var accessibilityId: String { return "UIA_CheckInTile" }
     
@@ -42,16 +35,18 @@ enum CheckInPlugin: TilePlugin {
     
     var icon: UIImage? { return UIImage(named:"fullcard_checkinAvail") }
     
+    var routableDeeplinks: [String] { return ["checkIn"] }
+    
     func performAction(sender: UIViewController?) {
         
         switch self {
-        case .checkIn(var stay, _, let updateBlock):
+        case .checkIn(let stay, let segment, let updateBlock):
             
             guard let vc = sender else { return }
             let checkInVC = CheckInViewController()
+            checkInVC.roomName = segment.segmentNumber
             checkInVC.completion = {
-                stay.checkInAvailable = false
-                CheckInModule.checkInCompleted(stay: stay, updateBlock: updateBlock)
+                CheckInModule.checkInCompleted(stay: stay, segment: segment, updateBlock: updateBlock)
             }
             
             vc.present(checkInVC, animated: true, completion: nil)
